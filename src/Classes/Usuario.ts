@@ -21,17 +21,28 @@ export class Usuario{
         this.registrar()
     }
 
-    // testes de registro: nome de usuário, cpf
-    // iniciar criando os métodos procura usuário por nome de usuario e procura usuario por cpf
+
+    // -------------------- NORMALIZAÇÕES --------------------------------
+    static normalizaParaString(string: any): string{
+        const normalizado = String(string).trim().toLowerCase()
+        return normalizado
+    }
+
+    static normalizaCpf(cpf: any): string{
+        const cpfNormalizado = String(cpf).trim().replace(/\D/g, "")
+        return cpfNormalizado
+    }
+
+    // ----------------------- MÉTODOS DE BUSCA -------------------------
 
     static procuraUsuarioUsername(userName: string): Usuario | null { 
 
-        while(!userName.trim()){
+        const normalizado = Usuario.normalizaParaString(userName)
+        while(!normalizado){
             console.log("Entrada inválida. Tente novamente.")
         } // aqui tratou entrada nula; não segue o fluxo do programa enquanto não receber entrada válida
         
-        const normalizado = userName.toLowerCase().trim()
-        const testeUserName = Usuario.listaUsuarios.find((el) => el._userName.toLowerCase().trim() === normalizado) // testeUserName é um OBJETO da lista de objetos listaUsuarios
+        const testeUserName = Usuario.listaUsuarios.find((el) => Usuario.normalizaParaString(el._userName) === normalizado) // testeUserName é um OBJETO da lista de objetos listaUsuarios
         
         if (testeUserName){
             return testeUserName // retorna o objeto
@@ -42,12 +53,13 @@ export class Usuario{
     }
 
     static procuraUsuarioCpf(cpf: string): Usuario | null {
-        while(!cpf.trim()){
+        const normalizado = Usuario.normalizaCpf(cpf)
+        
+        while(!normalizado){
             console.log("Entrada inválida. Tente novamente.")
         }
 
-        const normalizado = cpf.replace(/\D/g, ""); // remove todos caracteres não numéricos da string
-        const testeCpf = Usuario.listaUsuarios.find((el) => el._cpf.replace(/\D/g, "") === normalizado)
+        const testeCpf = Usuario.listaUsuarios.find((el) => Usuario.normalizaCpf(el._cpf) === normalizado)
         if (testeCpf) {
             return testeCpf
         } else {
@@ -68,6 +80,7 @@ export class Usuario{
             )
         }
     }
+
 
 }
 
