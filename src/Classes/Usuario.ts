@@ -39,7 +39,7 @@ export class Usuario{
 
         const normalizado = Usuario.normalizaParaString(userName)
         while(!normalizado){
-            console.log("Entrada inválida. Tente novamente.")
+            console.log("O nome de usuário não pode ser vazio. Tente novamente.")
         } // aqui tratou entrada nula; não segue o fluxo do programa enquanto não receber entrada válida
         
         const testeUserName = Usuario.listaUsuarios.find((el) => Usuario.normalizaParaString(el._userName) === normalizado) // testeUserName é um OBJETO da lista de objetos listaUsuarios
@@ -56,7 +56,7 @@ export class Usuario{
         const normalizado = Usuario.normalizaCpf(cpf)
         
         while(!normalizado){
-            console.log("Entrada inválida. Tente novamente.")
+            console.log("CPF não pode ser um campo vazio. Tente novamente.")
         }
 
         const testeCpf = Usuario.listaUsuarios.find((el) => Usuario.normalizaCpf(el._cpf) === normalizado)
