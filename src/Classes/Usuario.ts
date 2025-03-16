@@ -14,7 +14,7 @@ export class Usuario{
 
     constructor (nome: string, userName: string, cpf: string, senha: string, verificaAdmin: boolean) {
         this._id=Usuario.contadorId++
-        this._nome=nome
+        this._nome=normalizaParaString(nome)
         this._userName=normalizaParaString(userName)
         this._cpf=normalizaCpf(cpf)
         this._senha=senha
@@ -25,15 +25,16 @@ export class Usuario{
 
     // ----------------------- MÉTODOS DE BUSCA -------------------------
 
-    static procuraUsuarioUsername(userName: string): Usuario | null { 
+    static procuraUsuarioUsername(userName: string | undefined): Usuario[] | null { 
 
 
         const normalizado = normalizaParaString(userName)
-        while(!normalizado){
+        if(!normalizado){
             console.log("O nome de usuário não pode ser vazio. Tente novamente.")
+            return null
         } // aqui tratou entrada nula; não segue o fluxo do programa enquanto não receber entrada válida
         
-        const testeUserName = Usuario.listaUsuarios.find((el) => el._userName === normalizado) // testeUserName é um OBJETO da lista de objetos listaUsuarios
+        const testeUserName = Usuario.listaUsuarios.filter((el) => el._userName === normalizado) // testeUserName é um OBJETO da lista de objetos listaUsuarios
         
         if (testeUserName){
             return testeUserName // retorna o objeto
@@ -43,7 +44,7 @@ export class Usuario{
         }        
     }
 
-    static procuraUsuarioCpf(cpf: string): Usuario | null {
+    static procuraUsuarioCpf(cpf: string | undefined): Usuario[] | null {
         const normalizado = normalizaCpf(cpf)
         
         if(!normalizado){
@@ -51,7 +52,7 @@ export class Usuario{
             return null
         }
 
-        const testeCpf = Usuario.listaUsuarios.find((el) => el._cpf === normalizado)
+        const testeCpf = Usuario.listaUsuarios.filter((el) => el._cpf === normalizado)
 
         return testeCpf || null
 
