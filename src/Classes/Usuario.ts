@@ -1,5 +1,9 @@
 import PromptSync from "prompt-sync"
 const prompt = PromptSync()
+<<<<<<< HEAD
+=======
+import { normalizaParaString, normalizaCpf } from "../utils/normalizacao"
+>>>>>>> 2b5043f (criada sessão de testes. Testes executados com sucesso.)
 
 export class Usuario{
     protected _id: number
@@ -14,14 +18,20 @@ export class Usuario{
     constructor (nome: string, userName: string, cpf: string, senha: string, verificaAdmin: boolean) {
         this._id=Usuario.contadorId++
         this._nome=nome
+<<<<<<< HEAD
         this._userName=userName
         this._cpf=cpf
+=======
+        this._userName=normalizaParaString(userName)
+        this._cpf=normalizaCpf(cpf)
+>>>>>>> 2b5043f (criada sessão de testes. Testes executados com sucesso.)
         this._senha=senha
         this._verificaAdmin=verificaAdmin
         this.registrar()
     }
 
 
+<<<<<<< HEAD
     // -------------------- NORMALIZAÇÕES --------------------------------
     static normalizaParaString(string: any): string{
         const normalizado = String(string).trim().toLowerCase()
@@ -33,10 +43,13 @@ export class Usuario{
         return cpfNormalizado
     }
 
+=======
+>>>>>>> 2b5043f (criada sessão de testes. Testes executados com sucesso.)
     // ----------------------- MÉTODOS DE BUSCA -------------------------
 
     static procuraUsuarioUsername(userName: string): Usuario | null { 
 
+<<<<<<< HEAD
         const normalizado = Usuario.normalizaParaString(userName)
         while(!normalizado){
             console.log("O nome de usuário não pode ser vazio. Tente novamente.")
@@ -67,6 +80,32 @@ export class Usuario{
             return null
         }
 
+=======
+        const normalizado = normalizaParaString(userName)
+        if(!normalizado){
+            console.log("O nome de usuário não pode ser vazio.")
+            return null;
+        } // aqui tratou entrada nula; não segue o fluxo do programa enquanto não receber entrada válida
+        
+        const testeUserName = Usuario.listaUsuarios.find((el) =>el._userName === normalizado) // testeUserName é um OBJETO da lista de objetos listaUsuarios
+        
+        return testeUserName || null // retorna o objeto caso encontrado ou null caso não encontrado.
+      
+    }
+
+    static procuraUsuarioCpf(cpf: string): Usuario | null {
+        const normalizado = normalizaCpf(cpf)
+        
+        if(!normalizado){
+            console.log("CPF não pode ser um campo vazio.")
+            return null
+        }
+
+        const testeCpf = Usuario.listaUsuarios.find((el) => el._cpf === normalizado)
+
+        return testeCpf || null
+
+>>>>>>> 2b5043f (criada sessão de testes. Testes executados com sucesso.)
     }
 
     private registrar(){
@@ -82,6 +121,10 @@ export class Usuario{
     }
 
 
+<<<<<<< HEAD
 }
 
 // proximo upgrade > refatorar normalização fora dos métodos de pesquisa
+=======
+}
+>>>>>>> 2b5043f (criada sessão de testes. Testes executados com sucesso.)
