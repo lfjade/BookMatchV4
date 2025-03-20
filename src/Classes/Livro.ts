@@ -8,7 +8,7 @@ export class Livro{
     protected _generos: Genero[]
     protected _editora: string
     protected _edicao: string
-    protected _disponivel: boolean
+    private _disponivel: boolean
     protected _dataPublicacao: Date
     protected static contadorID: number=1
     static listaLivros: Livro[]=[]
@@ -46,7 +46,22 @@ export class Livro{
         return Livro.listaLivros.filter((el) => el._autor === normalizado) || null
     }
 
-    // procuraLivroGenero
+    procuraLivroGenero (genero: string | undefined): Livro[] | null {
+        const normalizado=normalizaParaString(genero)
+        if (!normalizado){
+            console.log("Nome de gênero não pode ser um campo vazio.")
+            return null
+        }
+
+        const testeLivroGenero = Livro.listaLivros.filter((el) => el._generos.some((generoObjeto) => generoObjeto.nome === normalizado))
+
+        if (testeLivroGenero.length > 0){
+            return testeLivroGenero
+        } else {
+            console.log("Nenhum livro deste gênero foi encontrado.")
+            return null
+        }
+    }
 
     procuraLivroEditora (editora: string | undefined): Livro[] | null{
         const normalizado = normalizaParaString(editora)
@@ -68,7 +83,20 @@ export class Livro{
         return Livro.listaLivros.filter((el)=> el._edicao === normalizado)
     }
 
-    // procuraLivroDisponivel
+    procuraLivroDisponivel(disponivel: boolean): Livro [] | null{ //tratar entrada undefined
+        const testeDisponivel = Livro.listaLivros.filter((el)=> el._disponivel=disponivel)
+        if (testeDisponivel.length>0){
+            return testeDisponivel
+        } else {
+            console.log(`Nenhum livro com status ${disponivel? "disponível" : "indisponível"} foi encontrado.`)
+            return null
+        }
+    }
 
-    //procuraLivroDataPublicacao
+    get disponivel (): boolean{
+        return this._disponivel
+    }
+    set disponivel (disponivel:boolean){
+        this._disponivel=disponivel
+    }
 }

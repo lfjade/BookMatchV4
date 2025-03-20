@@ -31,6 +31,10 @@ export class Genero {
         return Genero.listaGeneros.filter((el) => el._nome === normalizado) || null
         
     }
+
+    get nome (): string{
+        return this._nome
+    }
 }
 
 //amplição: utilizar o módulo assert para testes 
