@@ -1,4 +1,4 @@
-import { Usuario } from "../src/Classes/Usuario";
+import { Usuario } from "../src/Models/Usuario";
 
 // Criando usuários de teste
 const user1 = new Usuario("Alice", "alice123", "123.456.789-09", "senha123", false);

@@ -1,5 +1,5 @@
-import {Livro} from "../src/Classes/Livro"
-import { Genero } from "../src/Classes/Genero"
+import {Livro} from "../src/Models/Livro"
+import { Genero } from "../src/Models/Genero"
 import { normalizaParaString } from "../src/utils/normalizacao";
 
 console.log("Iniciando testes da classe Livro...");

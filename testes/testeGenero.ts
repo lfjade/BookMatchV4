@@ -1,4 +1,4 @@
-import { Genero } from "../src/Classes/Genero"
+import { Genero } from "../src/Models/Genero"
 
 // Criando e testando o cadastro de gêneros
 console.log("=== Teste de Cadastro de Gêneros ===")

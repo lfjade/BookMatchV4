@@ -22,6 +22,17 @@ export class Usuario{
         this.registrar()
     }
 
+    private registrar(){
+        const testeUserName=Usuario.procuraUsuarioUsername(this._userName)
+        const testeCpf = Usuario.procuraUsuarioCpf(this._cpf)
+        if (!testeUserName && !testeCpf){
+            Usuario.listaUsuarios.push(this)
+        } else {
+            console.log(
+                testeUserName && testeCpf? "Nome de usuário e CPF já cadastrados no sistema." : testeUserName ? "Nome de usuário já cadastrado no sistema." : "CPF já cadastrado no sistema."
+            )
+        }
+    }
 
     // ----------------------- MÉTODOS DE BUSCA -------------------------
 
@@ -58,16 +69,45 @@ export class Usuario{
 
     }
 
-    private registrar(){
-        const testeUserName=Usuario.procuraUsuarioUsername(this._userName)
-        const testeCpf = Usuario.procuraUsuarioCpf(this._cpf)
-        if (!testeUserName && !testeCpf){
-            Usuario.listaUsuarios.push(this)
-        } else {
-            console.log(
-                testeUserName && testeCpf? "Nome de usuário e CPF já cadastrados no sistema." : testeUserName ? "Nome de usuário já cadastrado no sistema." : "CPF já cadastrado no sistema."
-            )
-        }
+// --------------- getters --------------
+    get id (): number{
+        return this._id
     }
 
+    get nome (): string{
+        return this._nome
+    }
+
+    get username (): string{
+        return this._userName
+    }
+
+    get cpf (): string{
+        return this._cpf
+    }
+
+    get verificaAdmin (): boolean{
+        return this._verificaAdmin
+    }
+
+    // ---------------------- setters --------------
+    set id (id:number){
+        this._id=id
+    }
+
+    set nome (nome:string){
+        this._nome=nome
+    }
+
+    set userName (userName: string){
+        this._userName=userName
+    }
+
+    set cpf (cpf:string){
+        this._cpf=cpf
+    }
+
+    set verificaAdmin(verificaAdmin:boolean){
+        this._verificaAdmin=verificaAdmin
+    }
 }

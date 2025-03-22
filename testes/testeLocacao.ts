@@ -1,6 +1,6 @@
-import {Livro} from "../src/Classes/Livro"
-import {Usuario} from "../src/Classes/Usuario"
-import {Locacao} from "../src/Classes/Locacao"
+import {Livro} from "../src/Models/Livro"
+import {Usuario} from "../src/Models/Usuario"
+import {Locacao} from "../src/Models/Locacao"
 
 // Mensagens de status do teste
 function testar(condicao: boolean, mensagem: string) {
