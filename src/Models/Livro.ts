@@ -93,10 +93,69 @@ export class Livro{
         }
     }
 
+    // --------------- getters ---------------
+
+    get id (): number{
+        return this._id
+    }
+
+    get nome (): string{
+        return this._nome
+    }
+
+    get autor (): string{
+        return this._autor
+    }
+
+    get generos(): Genero[]{
+        return this._generos
+    }
+
+    get editora(): string{
+        return this._editora
+    }
+
+    get edicao(): string{
+        return this._edicao
+    }
     get disponivel (): boolean{
         return this._disponivel
     }
+
+    get dataPublicacao(): Date{
+        return this._dataPublicacao
+    }
+
+    // ---------------- setters --------------
+    set id (id:number){
+        this._id=id
+    }
+
+    set nome (nome:string){
+        this._nome=nome
+    }
+
+    set autor (autor:string){
+        this._autor=autor
+    }
+
+    set generos (generos: Genero[]){
+        this._generos=generos
+    }
+
+    set editora (editora: string){
+        this._editora=editora
+    }
+
+    set edicao (edicao: string){
+        this._edicao=edicao
+    }
+
     set disponivel (disponivel:boolean){
         this._disponivel=disponivel
+    }
+
+    set dataPublicacao(dataPublicacao:Date){
+        this._dataPublicacao=dataPublicacao
     }
 }

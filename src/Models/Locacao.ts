@@ -60,4 +60,51 @@ export class Locacao {
         return Locacao.listaLocacoes.filter(locacao => locacao._dataDevolvido !== null);
     }
     
+    //--------- getters --------------
+    get id(): number{
+        return this._id
+    }
+
+    get livro (){
+        return this._livro
+    }
+
+    get usuario (){
+        return this._usuario
+    }
+    get dataLocacao (){
+        return this._dataLocacao
+    }
+    get previsaoDevolucao(){
+        return this._previsaoDevolucao
+    }
+
+    get dataDevolvido(): Date | null{
+        return this._dataDevolvido? this._dataDevolvido : null
+    }
+
+    // ---------- setters -----------
+    set id(id:number){
+        this._id=id
+    }
+
+    set livro(livro: Livro){
+        this._livro=livro
+    }
+
+    set usuario(usuario:Usuario){
+        this._usuario=usuario
+    }
+
+    set dataLocacao(dataLocacao: Date ){
+        this._dataLocacao=dataLocacao
+    }
+
+    set previsaoDevolucao (previsaoDevolucao: Date){
+        this._previsaoDevolucao=previsaoDevolucao
+    }
+
+    set dataDevolvido(dataDevolvido:Date){
+        this._dataDevolvido=dataDevolvido
+    }
 }

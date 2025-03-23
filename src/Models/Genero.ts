@@ -32,8 +32,23 @@ export class Genero {
         
     }
 
+    // ----------------- getters ---------------
+
+    get id (): number{
+        return this._id
+    }
+
     get nome (): string{
         return this._nome
+    }
+
+    // --------------- setters --------------
+    set id(id:number){
+        this._id=id
+    }
+
+    set nome (nome:string){
+        this._nome=nome
     }
 }
 
