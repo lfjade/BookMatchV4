@@ -22,7 +22,17 @@ export class Livro{
         this._edicao=normalizaParaString(edicao)
         this._disponivel=true
         this._dataPublicacao=dataPublicacao
-        Livro.listaLivros.push(this)
+    }
+
+    registrarLivro(livro:Livro){
+        Livro.listaLivros.push(livro)
+    }
+
+    deletarLivro(livro:Livro){
+        const indice = Livro.listaLivros.findIndex((el) => el.id===livro.id)
+        if (indice !==-1){
+            Livro.listaLivros.splice(indice, 1) 
+        }
     }
 
     procuraLivroNome (nome:string | undefined): Livro[] | null{

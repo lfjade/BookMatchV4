@@ -9,19 +9,24 @@ export class Genero {
     constructor (nome:string){
         this._id=Genero.contadorID++
         this._nome=normalizaParaString(nome)
-        this.registrar()
     }
 
-    private registrar(){
-        const testeGenero=this.procuraGeneroNome(this._nome)
+    registrarGenero(genero: Genero){
+        const testeGenero=this.procuraGeneroNome(genero._nome)
         if (!testeGenero){
-            Genero.listaGeneros.push(this)
+            Genero.listaGeneros.push(genero)
             console.log("Gênero cadastrado.")
         } else {
             console.log("Gênero já cadastrado.")
         }
     }
-
+    deletarGenero(genero:Genero){
+            const indice = Genero.listaGeneros.findIndex((el) => el.id===genero.id)
+            if (indice !==-1){
+                Genero.listaGeneros.splice(indice, 1) 
+            }
+        }
+        
     procuraGeneroNome(nome:string | undefined): Genero[] | null{
         const normalizado = normalizaParaString(nome)
         if (!normalizado){

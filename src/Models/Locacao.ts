@@ -21,12 +21,22 @@ export class Locacao {
         this._previsaoDevolucao.setDate(this._dataLocacao.getDate()+14)
         this._dataDevolvido = null
 
-        if (this._livro.disponivel){
-            Locacao.listaLocacoes.push(this)
+    }
+
+    registrarLocacao(locacao: Locacao){
+        if (locacao._livro.disponivel){
+            Locacao.listaLocacoes.push(locacao)
             console.log("Locação registrada com sucesso.")
-            this._livro.disponivel=false
+            locacao._livro.disponivel=false
         } else {
             console.log("Livro não disponível para locação.")
+        }
+    }
+
+    deletarLocacao(locacao:Locacao){
+        const indice = Locacao.listaLocacoes.findIndex((el) => el.id===locacao.id)
+        if (indice !==-1){
+            Locacao.listaLocacoes.splice(indice, 1) 
         }
     }
 

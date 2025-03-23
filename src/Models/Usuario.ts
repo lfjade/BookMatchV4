@@ -19,20 +19,26 @@ export class Usuario{
         this._cpf=normalizaCpf(cpf)
         this._senha=senha
         this._verificaAdmin=verificaAdmin
-        this.registrar()
     }
 
-    private registrar(){
-        const testeUserName=Usuario.procuraUsuarioUsername(this._userName)
-        const testeCpf = Usuario.procuraUsuarioCpf(this._cpf)
+    registrarUsuario(usuario: Usuario){
+        const testeUserName=Usuario.procuraUsuarioUsername(usuario._userName)
+        const testeCpf = Usuario.procuraUsuarioCpf(usuario._cpf)
         if (!testeUserName && !testeCpf){
-            Usuario.listaUsuarios.push(this)
+            Usuario.listaUsuarios.push(usuario)
         } else {
             console.log(
                 testeUserName && testeCpf? "Nome de usuário e CPF já cadastrados no sistema." : testeUserName ? "Nome de usuário já cadastrado no sistema." : "CPF já cadastrado no sistema."
             )
         }
     }
+
+    deletarUsuario(usuario:Usuario){
+        const indice = Usuario.listaUsuarios.findIndex((el) => el.id===usuario.id)
+        if (indice !==-1){
+            Usuario.listaUsuarios.splice(indice, 1) // a partir do indice da lista encontrado, remove 1 elemento
+        }
+    } // aqui a verificação acontece na procura pelo índice e não envia nenhuma mensagem de confirmação
 
     // ----------------------- MÉTODOS DE BUSCA -------------------------
 
