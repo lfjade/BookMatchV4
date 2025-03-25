@@ -42,21 +42,23 @@ export class Locacao {
 
     // ---------- Métodos de busca ----------- //
 
-    buscaLocacaoPorID(id: number | undefined): Locacao | null {
-        const normalizado = normalizaParaNumero(id)
-        return Locacao.listaLocacoes.find((el) => el._id===normalizado) || null
+    buscaLocacaoPorID(id: number | undefined): Locacao[] {
+        const normalizado = normalizaParaNumero(id);
+        const locacao = Locacao.listaLocacoes.find((el) => el._id === normalizado);
+        
+        return locacao ? [locacao] : [];
     }
 
-    buscaLocacaoPorUsuario(usuario: Usuario | undefined): Locacao[] | null{
-        return Locacao.listaLocacoes.filter((el) => el._usuario === usuario) || null
+    buscaLocacaoPorUsuario(usuario: Usuario | undefined): Locacao[]{
+        return Locacao.listaLocacoes.filter((el) => el._usuario === usuario) || []
     }
 
-    buscaLocacaoPorLivro(livro: Livro | undefined): Locacao[] | null {
-        return Locacao.listaLocacoes.filter((el) => el._livro === livro) || null
+    buscaLocacaoPorLivro(livro: Livro | undefined): Locacao[]  {
+        return Locacao.listaLocacoes.filter((el) => el._livro === livro) || []
     }
 
     buscaLocacaoAtiva(): Locacao[]{
-        return Locacao.listaLocacoes.filter((el) => el._livro.disponivel===false) || null
+        return Locacao.listaLocacoes.filter((el) => el._livro.disponivel===false) || []
     }
 
     buscaLocacoesAtrasadas(): Locacao[] {

@@ -27,13 +27,13 @@ export class Genero {
             }
         }
         
-    procuraGeneroNome(nome:string | undefined): Genero[] | null{
+    procuraGeneroNome(nome:string | undefined): Genero[] {
         const normalizado = normalizaParaString(nome)
         if (!normalizado){
             console.log("Nome não pode ser um campo vazio.")
-            return null
+            return []
         }
-        return Genero.listaGeneros.filter((el) => el._nome === normalizado) || null
+        return Genero.listaGeneros.filter((el) => el._nome === normalizado) || []
         
     }
 

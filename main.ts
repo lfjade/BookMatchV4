@@ -3,6 +3,7 @@
 // Próximo passo: PRINCÍPIO DA SEPARAÇÃO DE PREOCUPAÇÕES -  PSP ou SEPARATION OF CONCERNS - SoC
 // Aplicando MVC
 // Models: Criação, atualização, exclusão e busca
+
 //View: Formatação de mensagens; saída de dados no console; mostrar objetos
 //Controller: Receber entradas de usuario (como parametros de busca)
 // chamar o model para manipular dados

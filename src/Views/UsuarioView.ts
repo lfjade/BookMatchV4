@@ -1,3 +1,5 @@
+//View: Formatação de mensagens; saída de dados no console; mostrar objetos
+
 import { Usuario } from "../Models/Usuario";
 
 export class UsuarioView {

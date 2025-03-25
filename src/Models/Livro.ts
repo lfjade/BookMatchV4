@@ -35,32 +35,32 @@ export class Livro{
         }
     }
 
-    procuraLivroNome (nome:string | undefined): Livro[] | null{
+    procuraLivroNome (nome:string | undefined): Livro[]{
         const normalizado = normalizaParaString(nome)
         if (!normalizado){
             console.log("Nome não pode ser um campo vazio.")
-            return null
+            return []
         }
         
-        return Livro.listaLivros.filter((el) => el._nome === normalizado) || null
+        return Livro.listaLivros.filter((el) => el._nome === normalizado) || []
     }
 
-    procuraLivroAutor (autor: string | undefined): Livro[] | null{
+    procuraLivroAutor (autor: string | undefined): Livro[] {
         const normalizado = normalizaParaString(autor)
 
         if (!normalizado){
             console.log("Nome não pode ser um campo vazio.")
-            return null
+            return []
         }
 
-        return Livro.listaLivros.filter((el) => el._autor === normalizado) || null
+        return Livro.listaLivros.filter((el) => el._autor === normalizado) || []
     }
 
-    procuraLivroGenero (genero: string | undefined): Livro[] | null {
+    procuraLivroGenero (genero: string | undefined): Livro[] {
         const normalizado=normalizaParaString(genero)
         if (!normalizado){
             console.log("Nome de gênero não pode ser um campo vazio.")
-            return null
+            return []
         }
 
         const testeLivroGenero = Livro.listaLivros.filter((el) => el._generos.some((generoObjeto) => generoObjeto.nome === normalizado))
@@ -69,37 +69,37 @@ export class Livro{
             return testeLivroGenero
         } else {
             console.log("Nenhum livro deste gênero foi encontrado.")
-            return null
+            return []
         }
     }
 
-    procuraLivroEditora (editora: string | undefined): Livro[] | null{
+    procuraLivroEditora (editora: string | undefined): Livro[]{
         const normalizado = normalizaParaString(editora)
         if (!normalizado){
             console.log("Nome não pode ser um campo vazio.")
-            return null
+            return []
         }
 
-        return Livro.listaLivros.filter((el) => el._editora === normalizado) || null
+        return Livro.listaLivros.filter((el) => el._editora === normalizado) || []
     }
 
-    procuraLivroEdicao (edicao: string | undefined): Livro[] | null {
+    procuraLivroEdicao (edicao: string | undefined): Livro[] {
         const normalizado = normalizaParaString(edicao)
         if (!normalizado){
             console.log("Nome não pode ser um campo vazio.")
-            return null
+            return []
         }
 
         return Livro.listaLivros.filter((el)=> el._edicao === normalizado)
     }
 
-    procuraLivroDisponivel(disponivel: boolean): Livro [] | null{ //tratar entrada undefined
+    procuraLivroDisponivel(disponivel: boolean): Livro [] { //tratar entrada undefined
         const testeDisponivel = Livro.listaLivros.filter((el)=> el._disponivel=disponivel)
         if (testeDisponivel.length>0){
             return testeDisponivel
         } else {
             console.log(`Nenhum livro com status ${disponivel? "disponível" : "indisponível"} foi encontrado.`)
-            return null
+            return []
         }
     }
 

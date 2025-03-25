@@ -42,13 +42,13 @@ export class Usuario{
 
     // ----------------------- MÉTODOS DE BUSCA -------------------------
 
-    static procuraUsuarioUsername(userName: string | undefined): Usuario[] | null { 
+    static procuraUsuarioUsername(userName: string | undefined): Usuario[] { 
 
 
         const normalizado = normalizaParaString(userName)
         if(!normalizado){
             console.log("O nome de usuário não pode ser vazio. Tente novamente.")
-            return null
+            return []
         } // aqui tratou entrada nula; não segue o fluxo do programa enquanto não receber entrada válida
         
         const testeUserName = Usuario.listaUsuarios.filter((el) => el._userName === normalizado) // testeUserName é um OBJETO da lista de objetos listaUsuarios
@@ -57,21 +57,21 @@ export class Usuario{
             return testeUserName // retorna o objeto
         } else {
             console.log("Usuário não encontrado.")
-            return null
+            return []
         }        
     }
 
-    static procuraUsuarioCpf(cpf: string | undefined): Usuario[] | null {
+    static procuraUsuarioCpf(cpf: string | undefined): Usuario[] {
         const normalizado = normalizaCpf(cpf)
         
         if(!normalizado){
             console.log("CPF não pode ser um campo vazio.")
-            return null
+            return []
         }
 
         const testeCpf = Usuario.listaUsuarios.filter((el) => el._cpf === normalizado)
 
-        return testeCpf || null
+        return testeCpf || []
 
     }
 
