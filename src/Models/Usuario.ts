@@ -1,6 +1,4 @@
-import PromptSync from "prompt-sync"
-const prompt = PromptSync()
-import { normalizaParaString, normalizaCpf } from "../utils/normalizacao"
+import { normalizaParaString, normalizaCpf, normalizaParaNumero } from "../utils/normalizacao"
 
 export class Usuario{
     protected _id: number
@@ -22,8 +20,8 @@ export class Usuario{
     }
 
     registrarUsuario(usuario: Usuario){
-        const testeUserName=Usuario.procuraUsuarioUsername(usuario._userName)
-        const testeCpf = Usuario.procuraUsuarioCpf(usuario._cpf)
+        const testeUserName=Usuario.buscaPorUserName(usuario._userName)
+        const testeCpf = Usuario.buscaPorCPF(usuario._cpf)
         if (!testeUserName && !testeCpf){
             Usuario.listaUsuarios.push(usuario)
         } else {
@@ -42,38 +40,45 @@ export class Usuario{
 
     // ----------------------- MÉTODOS DE BUSCA -------------------------
 
-    static procuraUsuarioUsername(userName: string | undefined): Usuario[] { 
-
+    static buscaPorUserName(userName: string | undefined): Usuario[] { 
 
         const normalizado = normalizaParaString(userName)
-        if(!normalizado){
-            console.log("O nome de usuário não pode ser vazio. Tente novamente.")
-            return []
-        } // aqui tratou entrada nula; não segue o fluxo do programa enquanto não receber entrada válida
         
-        const testeUserName = Usuario.listaUsuarios.filter((el) => el._userName === normalizado) // testeUserName é um OBJETO da lista de objetos listaUsuarios
+        if(!normalizado) return [] // aqui tratou entrada nula;
         
-        if (testeUserName){
-            return testeUserName // retorna o objeto
-        } else {
-            console.log("Usuário não encontrado.")
-            return []
-        }        
+        return Usuario.listaUsuarios.filter((el) => el._userName.includes(normalizado)) || []
+
     }
 
-    static procuraUsuarioCpf(cpf: string | undefined): Usuario[] {
+    static buscaPorCPF(cpf: string | undefined): Usuario[] {
         const normalizado = normalizaCpf(cpf)
         
-        if(!normalizado){
-            console.log("CPF não pode ser um campo vazio.")
-            return []
-        }
+        if(!normalizado) return []
 
-        const testeCpf = Usuario.listaUsuarios.filter((el) => el._cpf === normalizado)
-
-        return testeCpf || []
+        return Usuario.listaUsuarios.filter((el) => el._cpf.includes(normalizado)) || []
 
     }
+
+    static buscaPorID(id:number | undefined): Usuario[]{
+        const normalizado = normalizaParaNumero(id)
+
+        if(!normalizado) return []
+
+        return Usuario.listaUsuarios.filter((el) => String(el._id).includes(String(normalizado))) || []
+    }
+    
+    static buscaPorNome (nome: string | undefined): Usuario[]{
+        const normalizado = normalizaParaString(nome)
+
+        if (!normalizado) return []
+
+        return Usuario.listaUsuarios.filter((el) => el._nome.includes(normalizado)) || []
+    }
+    
+    static buscaPorTipoDeConta (conta: boolean): Usuario[]{
+        
+    }
+    // busca por tipo de conta
 
 // --------------- getters --------------
     get id (): number{
