@@ -19,22 +19,32 @@ export class Usuario{
         this._verificaAdmin=verificaAdmin
     }
 
-    registrarUsuario(usuario: Usuario){
+    static registrarUsuario(usuario: Usuario):
+    {sucesso:boolean; erro?:string}
+    {
         const testeUserName=Usuario.buscaPorUserName(usuario._userName)
         const testeCpf = Usuario.buscaPorCPF(usuario._cpf)
-        if (!testeUserName && !testeCpf){
-            Usuario.listaUsuarios.push(usuario)
-        } else {
-            console.log(
-                testeUserName && testeCpf? "Nome de usuário e CPF já cadastrados no sistema." : testeUserName ? "Nome de usuário já cadastrado no sistema." : "CPF já cadastrado no sistema."
-            )
+        if (testeUserName.length>0){
+            return {sucesso: false, erro: "USERNAME_DUPLICADO"} //CARALHO, esses tratamento de erros aqui ficou muito de patrão
         }
+
+        if(testeCpf.length>0){
+            return {sucesso:false, erro:"CPF_DUPLICADO"}
+        }
+
+        Usuario.listaUsuarios.push(usuario)
+        return {sucesso:true}
     }
 
-    deletarUsuario(usuario:Usuario){
+    static deletarUsuario(usuario:Usuario):
+    {sucesso:boolean}
+    {
         const indice = Usuario.listaUsuarios.findIndex((el) => el.id===usuario.id)
         if (indice !==-1){
             Usuario.listaUsuarios.splice(indice, 1) // a partir do indice da lista encontrado, remove 1 elemento
+            return {sucesso:true}
+        } else{
+            return {sucesso: false}
         }
     } // aqui a verificação acontece na procura pelo índice e não envia nenhuma mensagem de confirmação
 
@@ -76,9 +86,8 @@ export class Usuario{
     }
     
     static buscaPorTipoDeConta (conta: boolean): Usuario[]{
-        
+        return Usuario.listaUsuarios.filter((el)=> el._verificaAdmin===conta) || []
     }
-    // busca por tipo de conta
 
 // --------------- getters --------------
     get id (): number{
