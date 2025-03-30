@@ -1,10 +1,11 @@
 //View: Formatação de mensagens; saída de dados no console; mostrar objetos
 
 import { Usuario } from "../Models/Usuario";
+import { UsuarioErros, mensagensPadronizadas } from "../utils/erros";
 
 
 export function exibirMensagem(mensagem: string) {
-    console.log(mensagem)
+    console.log(mensagensPadronizadas[mensagem as UsuarioErros] || mensagem);
 }
 
 export function exibirUsuario(usuario: Usuario){

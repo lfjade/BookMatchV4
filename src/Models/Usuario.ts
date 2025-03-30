@@ -1,4 +1,5 @@
 import { normalizaParaString, normalizaCpf, normalizaParaNumero } from "../utils/normalizacao"
+import { UsuarioErros } from "../utils/erros"
 
 export class Usuario{
     protected _id: number
@@ -25,11 +26,11 @@ export class Usuario{
         const testeUserName=Usuario.buscaPorUserName(usuario._userName)
         const testeCpf = Usuario.buscaPorCPF(usuario._cpf)
         if (testeUserName.length>0){
-            return {sucesso: false, erro: "USERNAME_DUPLICADO"} //CARALHO, esses tratamento de erros aqui ficou muito de patrão
+            return {sucesso: false, erro: UsuarioErros.USERNAME_DUPLICADO} //CARALHO, esses tratamento de erros aqui ficou muito de patrão
         }
 
         if(testeCpf.length>0){
-            return {sucesso:false, erro:"CPF_DUPLICADO"}
+            return {sucesso:false, erro: UsuarioErros.CPF_DUPLICADO}
         }
 
         Usuario.listaUsuarios.push(usuario)
@@ -98,7 +99,7 @@ export class Usuario{
         return this._nome
     }
 
-    get username (): string{
+    get userName (): string{
         return this._userName
     }
 
