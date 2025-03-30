@@ -1,78 +1,49 @@
 import { Usuario } from "../Models/Usuario";
 import { exibirUsuario, exibirMensagem } from "../Views/UsuarioView";
+import { UsuarioErros, mensagensPadronizadas } from "../utils/erros";
 
-export function exibirUsuarioPorUserName (userName:string){
-    const usuarios = Usuario.buscaPorUserName(userName)
-
+function exibirUsuarios(usuarios: Usuario[], mensagemNaoEcontrado:string){
     if (usuarios.length===0){
-        exibirMensagem("Usuário não encontrado.")
+        exibirMensagem(mensagemNaoEcontrado)
     } else {
-        usuarios.forEach((usuario) => exibirUsuario(usuario))
+        usuarios.forEach(exibirUsuario)
     }
 }
 
-export function exibirUsuarioPorCPF (cpf:string){
-    const usuarios = Usuario.buscaPorCPF(cpf)
-    if(usuarios.length === 0){
-        exibirMensagem("Usuário não encontrado.")
-    } else {
-        usuarios.forEach((usuario) => exibirUsuario(usuario))
-    }
+
+export function exibirPorUserName (userName:string){
+    exibirUsuarios(Usuario.buscaPorUserName(userName), UsuarioErros.USUARIO_NAO_ENCONTRADO);
 }
 
-export function exibirUsuarioPorID(id: number){
-    const usuarios = Usuario.buscaPorID(id)
-    if (usuarios.length === 0){
-        exibirMensagem("Usuário não encontrado.")
-    } else {
-        usuarios.forEach((usuario) => exibirUsuario(usuario))
-    }
-
+export function exibirPorCPF (cpf:string){
+    exibirUsuarios(Usuario.buscaPorCPF(cpf), UsuarioErros.USUARIO_NAO_ENCONTRADO);
 }
 
-export function exibirUsuarioPorNome(nome: string){
-    const usuarios = Usuario.buscaPorNome(nome)
-
-    if (usuarios.length===0){
-        exibirMensagem("Usuário não encontrado.")
-    } else {
-        usuarios.forEach((usuario) => exibirUsuario(usuario))
-    }
+export function exibirPorID(id: number){
+    exibirUsuarios(Usuario.buscaPorID(id), UsuarioErros.USUARIO_NAO_ENCONTRADO);
 }
 
-export function exibirUsuarioPorConta(conta:boolean){
-    const usuarios = Usuario.buscaPorTipoDeConta(conta)
-
-    if (usuarios.length===0){
-        exibirMensagem("Usuário não encontrado.")
-    } else {
-        usuarios.forEach((usuario)=> exibirUsuario(usuario))
-    }
+export function exibirPorNome(nome: string){
+    exibirUsuarios(Usuario.buscaPorNome(nome), UsuarioErros.USUARIO_NAO_ENCONTRADO);    
 }
 
-export function cadastrarUsuario(usuario:Usuario){
-    const resultado = Usuario.registrarUsuario(usuario)
-
-    if (resultado.sucesso){
-        exibirMensagem("Usuário cadastrado com sucesso.")
-    }
-
-    switch (resultado.erro){
-        case "USERNAME_DUPLICADO":
-            exibirMensagem("Nome de usuário já cadastrado no sistema.")
-        break;
-        case "CPF_DUPLICADO":
-            exibirMensagem("CPF já cadastrado no sistema.")
-            break
-    }
+export function exibirPorConta(conta:boolean){
+    exibirUsuarios(Usuario.buscaPorTipoDeConta(conta), UsuarioErros.USUARIO_NAO_ENCONTRADO);
 }
 
-export function deletarUsuario(usuario:Usuario){
-    const resultado=Usuario.deletarUsuario(usuario)
+export function cadastrar(usuario: Usuario) {
+    const resultado = Usuario.registrarUsuario(usuario);
 
-    if(resultado.sucesso){
-        exibirMensagem("Usuário deletado com sucesso.")
-    } else {
-        exibirMensagem("Usuário não encontrado")
+    if (resultado.sucesso) {
+        exibirMensagem("Usuário cadastrado com sucesso.");
+        return;
     }
+
+    exibirMensagem(mensagensPadronizadas[resultado.erro as UsuarioErros] || "Erro desconhecido na criação de usuário.");
+}
+
+export function deletar(usuario: Usuario) {
+    const resultado = Usuario.deletarUsuario(usuario);
+
+    exibirMensagem(resultado.sucesso ? "Usuário deletado com sucesso." : UsuarioErros.USUARIO_NAO_ENCONTRADO);
 }
