@@ -1,6 +1,6 @@
 import { Usuario } from "../Models/Usuario";
 import { exibirUsuario, exibirMensagem } from "../Views/UsuarioView";
-import { UsuarioErros, mensagensPadronizadas } from "../utils/erros";
+import { UsuarioErros, mensagensPadronizadas } from "../utils/mensagensPadronizadas";
 
 function exibirUsuarios(usuarios: Usuario[], mensagemNaoEcontrado:string){
     if (usuarios.length===0){

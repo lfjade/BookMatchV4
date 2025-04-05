@@ -1,5 +1,5 @@
 import { normalizaParaString, normalizaCpf, normalizaParaNumero } from "../utils/normalizacao"
-import { UsuarioErros } from "../utils/erros"
+import { UsuarioErros } from "../utils"
 
 export class Usuario{
     protected _id: number
@@ -13,9 +13,9 @@ export class Usuario{
 
     constructor (nome: string, userName: string, cpf: string, senha: string, verificaAdmin: boolean) {
         this._id=Usuario.contadorId++
-        this._nome=normalizaParaString(nome)
-        this._userName=normalizaParaString(userName)
-        this._cpf=normalizaCpf(cpf)
+        this._nome=nome
+        this._userName=userName
+        this._cpf=cpf
         this._senha=senha
         this._verificaAdmin=verificaAdmin
     }
@@ -37,15 +37,13 @@ export class Usuario{
         return {sucesso:true}
     }
 
-    static deletarUsuario(usuario:Usuario):
-    {sucesso:boolean}
-    {
+    static deletarUsuario(usuario:Usuario): boolean{
         const indice = Usuario.listaUsuarios.findIndex((el) => el.id===usuario.id)
         if (indice !==-1){
             Usuario.listaUsuarios.splice(indice, 1) // a partir do indice da lista encontrado, remove 1 elemento
-            return {sucesso:true}
-        } else{
-            return {sucesso: false}
+            return true
+        } else {
+            return false
         }
     } // aqui a verificação acontece na procura pelo índice e não envia nenhuma mensagem de confirmação
 
@@ -83,7 +81,7 @@ export class Usuario{
 
         if (!normalizado) return []
 
-        return Usuario.listaUsuarios.filter((el) => el._nome.includes(normalizado)) || []
+        return Usuario.listaUsuarios.filter((el) => normalizaParaString(el._nome).includes(normalizado)) || []
     }
     
     static buscaPorTipoDeConta (conta: boolean): Usuario[]{

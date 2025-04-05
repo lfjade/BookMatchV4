@@ -1,19 +1,86 @@
 import { Usuario } from "../src/Models/Usuario";
+import { UsuarioErros } from "../src/utils/";
 
-// Criando usuários de teste
-const user1 = new Usuario("Alice", "alice123", "123.456.789-09", "senha123", false);
-const user2 = new Usuario("Bob", "bob", "987.654.321-00", "senha456", true);
-const user3 = new Usuario("Carlos", "alice123", "123.456.789-09", "senha789", false); // Deve falhar (repetição)
+// Função auxiliar para imprimir os testes
+function assert(condicao: boolean, descricao: string) {
+    if (condicao) {
+        console.log(`✅ SUCESSO - ${descricao}`);
+    } else {
+        console.error(`❌ FALHOU - ${descricao}`);
+    }
+}
 
-// Testando busca por username
-console.log(Usuario.procuraUsuarioUsername("alice123")); // Deve encontrar Alice
-console.log(Usuario.procuraUsuarioUsername("BOB")); // Deve encontrar Bob (case insensitive)
-console.log(Usuario.procuraUsuarioUsername("nao_existe")); // Deve retornar null
+// Resetando os dados antes de cada teste 
+function resetarUsuarios() {
+    Usuario["listaUsuarios"] = [];
+    Usuario["contadorId"] = 1;
+}
 
-// Testando busca por CPF
-console.log(Usuario.procuraUsuarioCpf("12345678909")); // Deve encontrar Alice
-console.log(Usuario.procuraUsuarioCpf("98765432100")); // Deve encontrar Bob
-console.log(Usuario.procuraUsuarioCpf("00000000000")); // Deve retornar null
+// -------------------- TESTES --------------------
 
-// Verificando se a listaUsuarios está correta
-console.log(Usuario.listaUsuarios);
+function testeCadastroUsuario() {
+    resetarUsuarios();
+
+    const usuario = new Usuario("Jade", "jadezin", "12345678900", "senha123", false);
+    const resultado = Usuario.registrarUsuario(usuario);
+
+    assert(resultado.sucesso === true, "Deve cadastrar um novo usuário com sucesso");
+    assert(Usuario["listaUsuarios"].length === 1, "A lista de usuários deve conter um usuário");
+}
+
+function testeUserNameDuplicado() {
+    resetarUsuarios();
+
+    const usuario1 = new Usuario("Jade", "jadezin", "12345678900", "senha123", false);
+    const usuario2 = new Usuario("Outra Jade", "jadezin", "09876543210", "senha456", false);
+
+    Usuario.registrarUsuario(usuario1);
+    const resultado = Usuario.registrarUsuario(usuario2);
+
+    assert(resultado.sucesso === false, "Deve impedir cadastro com username duplicado");
+    assert(resultado.erro === UsuarioErros.USERNAME_DUPLICADO, "Deve retornar erro de USERNAME_DUPLICADO");
+}
+
+function testeCpfDuplicado() {
+    resetarUsuarios();
+
+    const usuario1 = new Usuario("Jade", "jadezin", "12345678900", "senha123", false);
+    const usuario2 = new Usuario("Outra Jade", "jadezin2", "12345678900", "senha456", false);
+
+    Usuario.registrarUsuario(usuario1);
+    const resultado = Usuario.registrarUsuario(usuario2);
+
+    assert(resultado.sucesso === false, "Deve impedir cadastro com CPF duplicado");
+    assert(resultado.erro === UsuarioErros.CPF_DUPLICADO, "Deve retornar erro de CPF_DUPLICADO");
+}
+
+function testeDelecaoUsuario() {
+    resetarUsuarios();
+
+    const usuario = new Usuario("Jade", "jadezin", "12345678900", "senha123", false);
+    Usuario.registrarUsuario(usuario);
+
+    const resultado = Usuario.deletarUsuario(usuario);
+
+    assert(resultado === true, "Deve deletar o usuário com sucesso");
+    assert(Usuario["listaUsuarios"].length === 0, "A lista de usuários deve estar vazia após deleção");
+}
+
+function testeBuscaPorNome() {
+    resetarUsuarios();
+
+    const usuario = new Usuario("Jade Moon", "jadezin", "12345678900", "senha123", false);
+    Usuario.registrarUsuario(usuario);
+
+    const encontrados = Usuario.buscaPorNome("Moon");
+
+    assert(encontrados.length === 1, "Deve encontrar o usuário pelo nome");
+    assert(encontrados[0].nome === "Jade Moon", "O nome do usuário encontrado deve ser 'Jade Moon'");
+}
+
+// -------------------- EXECUÇÃO --------------------
+testeCadastroUsuario();
+testeUserNameDuplicado();
+testeCpfDuplicado();
+testeDelecaoUsuario();
+testeBuscaPorNome();

@@ -1,4 +1,4 @@
-import { normalizaParaString } from "../utils/normalizacao"
+import { normalizaParaNumero, normalizaParaString } from "../utils/normalizacao"
 
 export class Genero {
     protected _id: number
@@ -8,33 +8,39 @@ export class Genero {
 
     constructor (nome:string){
         this._id=Genero.contadorID++
-        this._nome=normalizaParaString(nome)
+        this._nome=nome
     }
 
-    registrarGenero(genero: Genero){
-        const testeGenero=this.procuraGeneroNome(genero._nome)
-        if (!testeGenero){
-            Genero.listaGeneros.push(genero)
-            console.log("Gênero cadastrado.")
+    static registrarGenero(genero: Genero): boolean{
+        const testeGenero=Genero.buscaPorNome(genero._nome)
+        if (testeGenero.length>0){
+            return false
         } else {
-            console.log("Gênero já cadastrado.")
+            Genero.listaGeneros.push(genero)
+            return true
         }
     }
-    deletarGenero(genero:Genero){
+    static deletarGenero(genero:Genero): boolean{
             const indice = Genero.listaGeneros.findIndex((el) => el.id===genero.id)
             if (indice !==-1){
-                Genero.listaGeneros.splice(indice, 1) 
+                Genero.listaGeneros.splice(indice, 1)
+                return true
+            } else {
+                return false
             }
         }
         
-    procuraGeneroNome(nome:string | undefined): Genero[] {
+    static buscaPorNome (nome:string | undefined): Genero[] {
         const normalizado = normalizaParaString(nome)
-        if (!normalizado){
-            console.log("Nome não pode ser um campo vazio.")
-            return []
-        }
-        return Genero.listaGeneros.filter((el) => el._nome === normalizado) || []
-        
+        if (!normalizado) return []
+            // busca não pode ser vazia   
+        return Genero.listaGeneros.filter((el) => normalizaParaString(el._nome).includes(normalizado)) || []
+    }
+
+    static buscaPorID(id:number | undefined): Genero[]{
+        const normalizado = normalizaParaNumero(id)
+        if (!normalizado) return []
+        return Genero.listaGeneros.filter((el) => String(el._id).includes(String(normalizado)))
     }
 
     // ----------------- getters ---------------
