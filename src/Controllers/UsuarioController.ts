@@ -11,6 +11,9 @@ function exibirUsuarios(usuarios: Usuario[], mensagemNaoEcontrado:string){
     }
 }
 
+export function exibirPorID(id: number){
+    exibirUsuarios(Usuario.buscaPorID(id), UsuarioErros.USUARIO_NAO_ENCONTRADO);
+}
 export function exibirPorUserName (userName:string){
     exibirUsuarios(Usuario.buscaPorUserName(userName), UsuarioErros.USUARIO_NAO_ENCONTRADO)
 }
@@ -19,9 +22,6 @@ export function exibirPorCPF (cpf:string){
     exibirUsuarios(Usuario.buscaPorCPF(cpf), UsuarioErros.USUARIO_NAO_ENCONTRADO)
 }
 
-export function exibirPorID(id: number){
-    exibirUsuarios(Usuario.buscaPorID(id), UsuarioErros.USUARIO_NAO_ENCONTRADO);
-}
 
 export function exibirPorNome(nome: string){
     exibirUsuarios(Usuario.buscaPorNome(nome), UsuarioErros.USUARIO_NAO_ENCONTRADO);    
@@ -45,8 +45,8 @@ export function cadastrar(usuario: Usuario) {
     }
 }
 
-export function deletar(usuario: Usuario) {
-    const resultado = Usuario.deletarUsuario(usuario)
+export function deletar(id: number) {
+    const resultado = Usuario.deletarUsuarioPorId(id)
 
     exibirMensagem(resultado? "Usuário deletado com sucesso." : UsuarioErros.USUARIO_NAO_ENCONTRADO)
 }

@@ -60,7 +60,7 @@ function testeDelecaoUsuario() {
     const usuario = new Usuario("Jade", "jadezin", "12345678900", "senha123", false);
     Usuario.registrarUsuario(usuario);
 
-    const resultado = Usuario.deletarUsuario(usuario);
+    const resultado = Usuario.deletarUsuarioPorId(usuario.id);
 
     assert(resultado === true, "Deve deletar o usuário com sucesso");
     assert(Usuario["listaUsuarios"].length === 0, "A lista de usuários deve estar vazia após deleção");

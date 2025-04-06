@@ -1,11 +1,11 @@
 import { normalizaParaNumero, normalizaParaString } from "../utils/";
 import { Genero } from "./Genero";
 import { LivroErros } from "../utils/";
-import { exibirMensagem } from "../Views/MensagemView";
 
 export class Livro{
     protected _id: number
     protected _nome: string
+    protected _isbn: number
     protected _autor: string
     protected _generos: Genero[]
     protected _editora: string
@@ -15,9 +15,10 @@ export class Livro{
     protected static contadorID: number=1
     static listaLivros: Livro[]=[]
 
-    constructor(nome: string, autor:string, generos:Genero[], editora: string, edicao: string, dataPublicacao:Date){
+    constructor(nome: string, isbn:number, autor:string, generos:Genero[], editora: string, edicao: string, dataPublicacao:Date){
         this._id=Livro.contadorID++
         this._nome=nome
+        this._isbn=isbn
         this._autor=autor
         this._generos=generos
         this._editora=editora
@@ -26,8 +27,13 @@ export class Livro{
         this._dataPublicacao=dataPublicacao
     }
 
-    static registrarLivro(livro:Livro){
+    static registrarLivro(livro:Livro): {sucesso:boolean, erro?:LivroErros} {
+        const testeIsbn=Livro.buscaPorISBN(livro._isbn)
+        if (testeIsbn.length>0){
+            return {sucesso:false, erro: LivroErros.LIVRO_DUPLICADO}
+        }
         Livro.listaLivros.push(livro)
+        return {sucesso:true}
     }
 
     static deletarLivroPorID(id:number): boolean{
@@ -44,113 +50,64 @@ export class Livro{
     // -------------------- MÉTODOS DE BUSCA ------------------
     static buscaPorId(id:number | undefined): Livro[]{
         const normalizado = normalizaParaNumero(id)
-        if (!normalizado){
-            exibirMensagem(LivroErros.CAMPO_DE_BUSCA_VAZIO, "Livro")
-            return []
-        }
+        if (!normalizado) return []
 
-        const resultado = Livro.listaLivros.filter((el) => String(el._id).includes(String(normalizado)))
+        return Livro.listaLivros.filter((el) => String(el._id).includes(String(normalizado)))
 
-        if (resultado.length===0){
-            exibirMensagem(LivroErros.LIVRO_NAO_ENCONTRADO, "Livro")
-            return []
-        }
-        return resultado
     }
 
     static buscaPorNome (nome:string | undefined): Livro[]{
         const normalizado = normalizaParaString(nome)
-        if (!normalizado){
-            exibirMensagem(LivroErros.CAMPO_DE_BUSCA_VAZIO, "Livro")
-            return []
-        }
+        if (!normalizado) return []
         
-        const resultado = Livro.listaLivros.filter((el) => el._nome.includes(normalizado))
+        return Livro.listaLivros.filter((el) => normalizaParaString(el._nome).includes(normalizado))
+    }
 
-        if (resultado.length===0){
-            exibirMensagem(LivroErros.LIVRO_NAO_ENCONTRADO, "Livro")
-            return []
-        }
-        return resultado
+    static buscaPorISBN (isbn:number | undefined): Livro[]{
+        const normalizado = normalizaParaNumero(isbn)
+
+        if(!normalizado) return []
+
+        return Livro.listaLivros.filter((el)=> String(el._isbn).includes(String(normalizado)))
+
     }
 
     static buscaPorAutor (autor: string | undefined): Livro[] {
         const normalizado = normalizaParaString(autor)
 
-        if (!normalizado){
-            exibirMensagem(LivroErros.CAMPO_DE_BUSCA_VAZIO, "Livro")
-            return []
-        }
+        if (!normalizado) return []
 
-        const resultado = Livro.listaLivros.filter((el) => el._autor.includes(normalizado))
-        if (resultado.length===0){
-            exibirMensagem(LivroErros.LIVRO_NAO_ENCONTRADO, "Livro")
-            return []
-        }
-        return resultado
+        return Livro.listaLivros.filter((el) => normalizaParaString(el._autor).includes(normalizado))
+
     }
 
     static buscaPorGenero (genero: string | undefined): Livro[] {
         const normalizado=normalizaParaString(genero)
-        if (!normalizado){
-            exibirMensagem(LivroErros.CAMPO_DE_BUSCA_VAZIO, "Livro")
-            return []
-        }
+        if (!normalizado) return []
 
-        const resultado = Livro.listaLivros.filter((el) => el._generos.some((generoObjeto) => generoObjeto.nome.includes(normalizado)))
+        return Livro.listaLivros.filter((el) => el._generos.some((generoObjeto) => normalizaParaString(generoObjeto.nome).includes(normalizado)))
 
-        if (resultado.length===0){
-            exibirMensagem(LivroErros.LIVRO_NAO_ENCONTRADO, "Livro")
-            return []
-        }
-            return resultado
     }
 
     static buscaPorEditora (editora: string | undefined): Livro[]{
         const normalizado = normalizaParaString(editora)
-        if (!normalizado){
-            exibirMensagem(LivroErros.CAMPO_DE_BUSCA_VAZIO, "Livro")
-            return []
-        }
+        if (!normalizado) return []
 
-        const resultado = Livro.listaLivros.filter((el) => el._editora.includes(normalizado))
+        return Livro.listaLivros.filter((el) => normalizaParaString(el._editora).includes(normalizado))
 
-        if (resultado.length===0){
-            exibirMensagem(LivroErros.LIVRO_NAO_ENCONTRADO, "Livro")
-            return []
-        }
-        return resultado
     }
 
     static buscaPorEdicao (edicao: string | undefined): Livro[] {
         const normalizado = normalizaParaString(edicao)
-        if (!normalizado){
-            exibirMensagem(LivroErros.CAMPO_DE_BUSCA_VAZIO, "Livro")
-            return []
-        }
+        if (!normalizado) return []
 
-        const resultado = Livro.listaLivros.filter((el)=> el._edicao.includes(normalizado))
-
-        if (resultado.length===0){
-            exibirMensagem(LivroErros.LIVRO_NAO_ENCONTRADO, "Livro")
-            return []
-        }
-        return resultado
+        return Livro.listaLivros.filter((el)=> normalizaParaString(el._edicao).includes(normalizado))
     }
 
     static buscaPorDisponivel(disponivel: boolean | undefined): Livro [] { 
-        if (disponivel === undefined){
-            exibirMensagem(LivroErros.CAMPO_DE_BUSCA_VAZIO, "Livro")
-            return []
-        } else {
-            const testeDisponivel = Livro.listaLivros.filter((el)=> el._disponivel===disponivel)
-            if (testeDisponivel.length===0){
-                exibirMensagem(LivroErros.LIVRO_NAO_ENCONTRADO, "Livro")
-                return []
-            } else {
-                return testeDisponivel
-            } 
-        }
+        if (disponivel === undefined) return []
+        return Livro.listaLivros.filter((el)=> el._disponivel===disponivel)
+            
     }
 
     // --------------- getters ---------------
@@ -161,6 +118,10 @@ export class Livro{
 
     get nome (): string{
         return this._nome
+    }
+
+    get isbn():number{
+        return this._isbn
     }
 
     get autor (): string{
@@ -193,6 +154,10 @@ export class Livro{
 
     set nome (nome:string){
         this._nome=nome
+    }
+
+    set isbn(isbn:number){
+        this._isbn=isbn
     }
 
     set autor (autor:string){

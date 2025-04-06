@@ -14,7 +14,9 @@
 
 //!!!!!!!!!!!!!! IMPLEMENTANDO LIVRO
 //  PADRONIZAR ERROS DE LIVRO > busca não pode ser um campo vazio 
-// !!!! necessidade de implementar erros de busca com campo vazio em Usuário e Gênero também
+// necessidade de implementar erros de busca com campo vazio em Usuário e Gênero também
 // !!!!!!!!!!!!!!!!!!11 ADICIONAR METODOS 'LISTAR TODOS'
+//  comparar métodos análogos nas classes livro, genero e usuario
+// !!!!!!!!!! ideia: padronizar isbn
 // fase 2: login
 // fase 3: menus

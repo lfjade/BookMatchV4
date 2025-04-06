@@ -17,3 +17,11 @@ export function normalizaParaNumero(valor: any): number | null {
     const convertido = Number(valor);
     return isNaN(convertido) ? null : convertido;
 }
+
+export function formataData (data: Date): string{
+    const dia = String(data.getDate()).padStart(2, '0')
+    const mes = String(data.getMonth()).padStart(2, '0')
+    const ano = data.getFullYear()
+
+    return `${dia}/${mes}/${ano}`
+}

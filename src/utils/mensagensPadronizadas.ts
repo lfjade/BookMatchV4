@@ -8,12 +8,13 @@ export const mensagensPadronizadas = {
     },
 
     Genero:{
-        [GeneroErros.GENERO_DUPLICADO]: "Nome de gênero já cadastrado no sistema.",
         [GeneroErros.GENERO_NAO_ENCONTRADO]: "Nenhum gênero foi encontrado.",
+        [GeneroErros.GENERO_DUPLICADO]: "Nome de gênero já cadastrado no sistema.",
         [UsuarioErros.CAMPO_DE_BUSCA_VAZIO]: "O campo de busca não pode ser vazio."
     },
     Livro:{
         [LivroErros.LIVRO_NAO_ENCONTRADO]: "Nenhum livro foi encontrado.",
+        [LivroErros.LIVRO_DUPLICADO]: "Livro já cadastrado no sistema.",
         [LivroErros.CAMPO_DE_BUSCA_VAZIO]: "O campo de busca não pode ser vazio."
     }
 }

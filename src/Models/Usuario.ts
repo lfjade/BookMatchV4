@@ -1,6 +1,5 @@
 import { normalizaParaString, normalizaCpf, normalizaParaNumero } from "../utils/normalizacao"
 import { UsuarioErros } from "../utils"
-import { exibirMensagem } from "../Views/MensagemView"
 
 export class Usuario{
     protected _id: number
@@ -22,8 +21,7 @@ export class Usuario{
     }
 
     static registrarUsuario(usuario: Usuario):
-    {sucesso:boolean; erro?:string}
-    {
+    {sucesso:boolean; erro?:UsuarioErros} {
         const testeUserName=Usuario.buscaPorUserName(usuario._userName)
         const testeCpf = Usuario.buscaPorCPF(usuario._cpf)
         if (testeUserName.length>0){
@@ -38,8 +36,8 @@ export class Usuario{
         return {sucesso:true}
     }
 
-    static deletarUsuario(usuario:Usuario): boolean{
-        const indice = Usuario.listaUsuarios.findIndex((el) => el.id===usuario.id)
+    static deletarUsuarioPorId(id:number): boolean{
+        const indice = Usuario.listaUsuarios.findIndex((el) => el.id===id)
         if (indice !==-1){
             Usuario.listaUsuarios.splice(indice, 1) // a partir do indice da lista encontrado, remove 1 elemento
             return true
@@ -54,91 +52,44 @@ export class Usuario{
 
         const normalizado = normalizaParaString(userName)
         
-        if(!normalizado) {
-            exibirMensagem(UsuarioErros.CAMPO_DE_BUSCA_VAZIO, "Usuario")
-            return []
-        } // aqui tratou entrada nula;
+        if(!normalizado) return []
+         // aqui tratou entrada nula;
         
-        const resultado = Usuario.listaUsuarios.filter((el) => el._userName.includes(normalizado))
+        return Usuario.listaUsuarios.filter((el) => normalizaParaString(el._userName).includes(normalizado))
 
-        if (resultado.length===0){
-            exibirMensagem(UsuarioErros.USUARIO_NAO_ENCONTRADO, "Usuario")
-            return []
-        }
-
-        return resultado
 
     }
 
     static buscaPorCPF(cpf: string | undefined): Usuario[] {
         const normalizado = normalizaCpf(cpf)
         
-        if(!normalizado) {
-            exibirMensagem(UsuarioErros.CAMPO_DE_BUSCA_VAZIO, "Usuario")
-            return []
-        }
+        if(!normalizado) return []
 
-        const resultado = Usuario.listaUsuarios.filter((el) => el._cpf.includes(normalizado))
-
-        if (resultado.length===0){
-            exibirMensagem(UsuarioErros.USUARIO_NAO_ENCONTRADO, "Usuario")
-            return []
-        }
-
-        return resultado
+        return Usuario.listaUsuarios.filter((el) => normalizaCpf(el._cpf).includes(normalizado))
 
     }
 
     static buscaPorID(id:number | undefined): Usuario[]{
         const normalizado = normalizaParaNumero(id)
 
-        if(!normalizado) {
-            exibirMensagem(UsuarioErros.CAMPO_DE_BUSCA_VAZIO, "Usuario")
-            return []
-        }
+        if(!normalizado) return []
 
-        const resultado = Usuario.listaUsuarios.filter((el) => String(el._id).includes(String(normalizado)))
+        return Usuario.listaUsuarios.filter((el) => String(el._id).includes(String(normalizado)))
 
-        if (resultado.length===0){
-            exibirMensagem(UsuarioErros.USUARIO_NAO_ENCONTRADO, "Usuario")
-            return []
-        }
-
-        return resultado
     }
     
     static buscaPorNome (nome: string | undefined): Usuario[]{
         const normalizado = normalizaParaString(nome)
 
-        if (!normalizado) {
-            exibirMensagem(UsuarioErros.CAMPO_DE_BUSCA_VAZIO, "Usuario")
-            return []
-        }
+        if (!normalizado) return []
 
-        const resultado = Usuario.listaUsuarios.filter((el) => normalizaParaString(el._nome).includes(normalizado))
+        return Usuario.listaUsuarios.filter((el) => normalizaParaString(el._nome).includes(normalizado))
 
-        if (resultado.length===0){
-            exibirMensagem(UsuarioErros.USUARIO_NAO_ENCONTRADO, "Usuario")
-            return []
-        }
-
-        return resultado
     }
     
     static buscaPorTipoDeConta (conta: boolean | undefined): Usuario[]{
-        if (conta===undefined){
-            exibirMensagem(UsuarioErros.CAMPO_DE_BUSCA_VAZIO, "Usuario")
-            return []
-        } else {
-            const resultado = Usuario.listaUsuarios.filter((el)=> el._verificaAdmin===conta)
-
-            if (resultado.length===0){
-                exibirMensagem(UsuarioErros.USUARIO_NAO_ENCONTRADO, "Usuario")
-                return []
-            }
-    
-            return resultado
-        }
+        if (conta===undefined) return []
+        return Usuario.listaUsuarios.filter((el)=> el._verificaAdmin===conta)
     }
 
 // --------------- getters --------------
