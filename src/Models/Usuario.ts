@@ -1,5 +1,6 @@
 import { normalizaParaString, normalizaCpf, normalizaParaNumero } from "../utils/normalizacao"
 import { UsuarioErros } from "../utils"
+import { exibirMensagem } from "../Views/MensagemView"
 
 export class Usuario{
     protected _id: number
@@ -53,7 +54,10 @@ export class Usuario{
 
         const normalizado = normalizaParaString(userName)
         
-        if(!normalizado) return [] // aqui tratou entrada nula;
+        if(!normalizado) {
+            exibirMensagem(UsuarioErros.CAMPO_DE_BUSCA_VAZIO, "Usuario")
+            return []
+        } // aqui tratou entrada nula;
         
         return Usuario.listaUsuarios.filter((el) => el._userName.includes(normalizado)) || []
 
@@ -62,7 +66,10 @@ export class Usuario{
     static buscaPorCPF(cpf: string | undefined): Usuario[] {
         const normalizado = normalizaCpf(cpf)
         
-        if(!normalizado) return []
+        if(!normalizado) {
+            exibirMensagem(UsuarioErros.CAMPO_DE_BUSCA_VAZIO, "Usuario")
+            return []
+        }
 
         return Usuario.listaUsuarios.filter((el) => el._cpf.includes(normalizado)) || []
 
@@ -71,7 +78,10 @@ export class Usuario{
     static buscaPorID(id:number | undefined): Usuario[]{
         const normalizado = normalizaParaNumero(id)
 
-        if(!normalizado) return []
+        if(!normalizado) {
+            exibirMensagem(UsuarioErros.CAMPO_DE_BUSCA_VAZIO, "Usuario")
+            return []
+        }
 
         return Usuario.listaUsuarios.filter((el) => String(el._id).includes(String(normalizado))) || []
     }
@@ -79,7 +89,10 @@ export class Usuario{
     static buscaPorNome (nome: string | undefined): Usuario[]{
         const normalizado = normalizaParaString(nome)
 
-        if (!normalizado) return []
+        if (!normalizado) {
+            exibirMensagem(UsuarioErros.CAMPO_DE_BUSCA_VAZIO, "Usuario")
+            return []
+        }
 
         return Usuario.listaUsuarios.filter((el) => normalizaParaString(el._nome).includes(normalizado)) || []
     }

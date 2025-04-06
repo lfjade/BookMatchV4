@@ -1,5 +1,6 @@
 import { GeneroErros } from "../utils"
 import { normalizaParaNumero, normalizaParaString } from "../utils/normalizacao"
+import { exibirMensagem } from "../Views/MensagemView"
 
 export class Genero {
     protected _id: number
@@ -33,14 +34,20 @@ export class Genero {
         
     static buscaPorNome (nome:string | undefined): Genero[] {
         const normalizado = normalizaParaString(nome)
-        if (!normalizado) return []
+        if (!normalizado) {
+            exibirMensagem(GeneroErros.CAMPO_DE_BUSCA_VAZIO, "Genero")
+            return []
+        }
             // busca não pode ser vazia   
         return Genero.listaGeneros.filter((el) => normalizaParaString(el._nome).includes(normalizado)) || []
     }
 
     static buscaPorID(id:number | undefined): Genero[]{
         const normalizado = normalizaParaNumero(id)
-        if (!normalizado) return []
+        if (!normalizado) {
+            exibirMensagem(GeneroErros.CAMPO_DE_BUSCA_VAZIO, "Genero")
+            return []
+        }
         return Genero.listaGeneros.filter((el) => String(el._id).includes(String(normalizado)))
     }
 

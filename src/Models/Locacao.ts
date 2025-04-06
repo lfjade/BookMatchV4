@@ -1,6 +1,6 @@
 import { Livro } from "./Livro";
 import { Usuario } from "./Usuario";
-import {normalizaParaNumero} from "../utils/normalizacao"
+import {normalizaParaNumero} from "../utils/"
 
 export class Locacao {
     protected _id: number

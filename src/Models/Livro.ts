@@ -1,4 +1,4 @@
-import { normalizaParaString } from "../utils/normalizacao";
+import { normalizaParaString } from "../utils/";
 import { Genero } from "./Genero";
 
 export class Livro{
@@ -15,11 +15,11 @@ export class Livro{
 
     constructor(nome: string, autor:string, generos:Genero[], editora: string, edicao: string, dataPublicacao:Date){
         this._id=Livro.contadorID++
-        this._nome=normalizaParaString(nome)
-        this._autor=normalizaParaString(autor)
+        this._nome=nome
+        this._autor=autor
         this._generos=generos
-        this._editora=normalizaParaString(editora)
-        this._edicao=normalizaParaString(edicao)
+        this._editora=editora
+        this._edicao=edicao
         this._disponivel=true
         this._dataPublicacao=dataPublicacao
     }
@@ -28,14 +28,19 @@ export class Livro{
         Livro.listaLivros.push(livro)
     }
 
-    deletarLivro(livro:Livro){
+    deletarLivro(livro:Livro): boolean{
         const indice = Livro.listaLivros.findIndex((el) => el.id===livro.id)
         if (indice !==-1){
-            Livro.listaLivros.splice(indice, 1) 
+            Livro.listaLivros.splice(indice, 1)
+            return true
+        } else {
+            return false
         }
     }
 
-    procuraLivroNome (nome:string | undefined): Livro[]{
+
+    // -------------------- MÉTODOS DE BUSCA ------------------
+    buscaPorNome (nome:string | undefined): Livro[]{
         const normalizado = normalizaParaString(nome)
         if (!normalizado){
             console.log("Nome não pode ser um campo vazio.")
@@ -45,7 +50,7 @@ export class Livro{
         return Livro.listaLivros.filter((el) => el._nome === normalizado) || []
     }
 
-    procuraLivroAutor (autor: string | undefined): Livro[] {
+    buscaPorAutor (autor: string | undefined): Livro[] {
         const normalizado = normalizaParaString(autor)
 
         if (!normalizado){
@@ -56,7 +61,7 @@ export class Livro{
         return Livro.listaLivros.filter((el) => el._autor === normalizado) || []
     }
 
-    procuraLivroGenero (genero: string | undefined): Livro[] {
+    buscaPorGenero (genero: string | undefined): Livro[] {
         const normalizado=normalizaParaString(genero)
         if (!normalizado){
             console.log("Nome de gênero não pode ser um campo vazio.")
@@ -73,7 +78,7 @@ export class Livro{
         }
     }
 
-    procuraLivroEditora (editora: string | undefined): Livro[]{
+    buscaPorEditora (editora: string | undefined): Livro[]{
         const normalizado = normalizaParaString(editora)
         if (!normalizado){
             console.log("Nome não pode ser um campo vazio.")
@@ -83,7 +88,7 @@ export class Livro{
         return Livro.listaLivros.filter((el) => el._editora === normalizado) || []
     }
 
-    procuraLivroEdicao (edicao: string | undefined): Livro[] {
+    buscaPorEdicao (edicao: string | undefined): Livro[] {
         const normalizado = normalizaParaString(edicao)
         if (!normalizado){
             console.log("Nome não pode ser um campo vazio.")
@@ -93,7 +98,7 @@ export class Livro{
         return Livro.listaLivros.filter((el)=> el._edicao === normalizado)
     }
 
-    procuraLivroDisponivel(disponivel: boolean): Livro [] { //tratar entrada undefined
+    buscaPorDisponivel(disponivel: boolean): Livro [] { //tratar entrada undefined
         const testeDisponivel = Livro.listaLivros.filter((el)=> el._disponivel=disponivel)
         if (testeDisponivel.length>0){
             return testeDisponivel
