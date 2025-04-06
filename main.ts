@@ -10,5 +10,7 @@
 // usar o view para apresentar a saída pro usuário
 // controlar o fluxo da aplicação
 
+//!!!!!!!!! implementando Gênero
+
 // fase 2: login
 // fase 3: menus

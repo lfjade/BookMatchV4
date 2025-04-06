@@ -1,6 +1,7 @@
 import { Usuario } from "../Models/Usuario";
-import { exibirUsuario, exibirMensagem } from "../Views/UsuarioView";
-import { UsuarioErros, mensagensPadronizadas } from "../utils/mensagensPadronizadas";
+import { exibirUsuario } from "../Views/UsuarioView";
+import { exibirMensagem } from "../Views/MensagemView";
+import { UsuarioErros } from "../utils";
 
 function exibirUsuarios(usuarios: Usuario[], mensagemNaoEcontrado:string){
     if (usuarios.length===0){
@@ -10,13 +11,12 @@ function exibirUsuarios(usuarios: Usuario[], mensagemNaoEcontrado:string){
     }
 }
 
-
 export function exibirPorUserName (userName:string){
-    exibirUsuarios(Usuario.buscaPorUserName(userName), UsuarioErros.USUARIO_NAO_ENCONTRADO);
+    exibirUsuarios(Usuario.buscaPorUserName(userName), UsuarioErros.USUARIO_NAO_ENCONTRADO)
 }
 
 export function exibirPorCPF (cpf:string){
-    exibirUsuarios(Usuario.buscaPorCPF(cpf), UsuarioErros.USUARIO_NAO_ENCONTRADO);
+    exibirUsuarios(Usuario.buscaPorCPF(cpf), UsuarioErros.USUARIO_NAO_ENCONTRADO)
 }
 
 export function exibirPorID(id: number){
@@ -36,14 +36,17 @@ export function cadastrar(usuario: Usuario) {
 
     if (resultado.sucesso) {
         exibirMensagem("Usuário cadastrado com sucesso.");
-        return;
+        return
     }
-
-    exibirMensagem(mensagensPadronizadas[resultado.erro as UsuarioErros] || "Erro desconhecido na criação de usuário.");
+    if (resultado.erro){
+        exibirMensagem(resultado.erro, "Usuario")
+    } else {
+        exibirMensagem("Erro desconhecido na criação de usuário.")
+    }
 }
 
 export function deletar(usuario: Usuario) {
-    const resultado = Usuario.deletarUsuario(usuario);
+    const resultado = Usuario.deletarUsuario(usuario)
 
-    exibirMensagem(resultado.sucesso ? "Usuário deletado com sucesso." : UsuarioErros.USUARIO_NAO_ENCONTRADO);
+    exibirMensagem(resultado? "Usuário deletado com sucesso." : UsuarioErros.USUARIO_NAO_ENCONTRADO)
 }

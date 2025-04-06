@@ -1,3 +1,4 @@
+import { GeneroErros } from "../utils"
 import { normalizaParaNumero, normalizaParaString } from "../utils/normalizacao"
 
 export class Genero {
@@ -11,13 +12,13 @@ export class Genero {
         this._nome=nome
     }
 
-    static registrarGenero(genero: Genero): boolean{
+    static registrarGenero(genero: Genero): {sucesso: boolean, erro?: GeneroErros}{
         const testeGenero=Genero.buscaPorNome(genero._nome)
         if (testeGenero.length>0){
-            return false
+            return {sucesso: false, erro: GeneroErros.GENERO_DUPLICADO}
         } else {
             Genero.listaGeneros.push(genero)
-            return true
+            return {sucesso: true}
         }
     }
     static deletarGenero(genero:Genero): boolean{
