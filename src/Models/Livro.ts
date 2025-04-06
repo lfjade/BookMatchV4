@@ -1,5 +1,7 @@
-import { normalizaParaString } from "../utils/";
+import { normalizaParaNumero, normalizaParaString } from "../utils/";
 import { Genero } from "./Genero";
+import { LivroErros } from "../utils/";
+import { exibirMensagem } from "../Views/MensagemView";
 
 export class Livro{
     protected _id: number
@@ -24,12 +26,12 @@ export class Livro{
         this._dataPublicacao=dataPublicacao
     }
 
-    registrarLivro(livro:Livro){
+    static registrarLivro(livro:Livro){
         Livro.listaLivros.push(livro)
     }
 
-    deletarLivro(livro:Livro): boolean{
-        const indice = Livro.listaLivros.findIndex((el) => el.id===livro.id)
+    static deletarLivroPorID(id:number): boolean{
+        const indice = Livro.listaLivros.findIndex((el) => el.id===id)
         if (indice !==-1){
             Livro.listaLivros.splice(indice, 1)
             return true
@@ -40,71 +42,114 @@ export class Livro{
 
 
     // -------------------- MÉTODOS DE BUSCA ------------------
-    buscaPorNome (nome:string | undefined): Livro[]{
+    static buscaPorId(id:number | undefined): Livro[]{
+        const normalizado = normalizaParaNumero(id)
+        if (!normalizado){
+            exibirMensagem(LivroErros.CAMPO_DE_BUSCA_VAZIO, "Livro")
+            return []
+        }
+
+        const resultado = Livro.listaLivros.filter((el) => String(el._id).includes(String(normalizado)))
+
+        if (resultado.length===0){
+            exibirMensagem(LivroErros.LIVRO_NAO_ENCONTRADO, "Livro")
+            return []
+        }
+        return resultado
+    }
+
+    static buscaPorNome (nome:string | undefined): Livro[]{
         const normalizado = normalizaParaString(nome)
         if (!normalizado){
-            console.log("Nome não pode ser um campo vazio.")
+            exibirMensagem(LivroErros.CAMPO_DE_BUSCA_VAZIO, "Livro")
             return []
         }
         
-        return Livro.listaLivros.filter((el) => el._nome === normalizado) || []
+        const resultado = Livro.listaLivros.filter((el) => el._nome.includes(normalizado))
+
+        if (resultado.length===0){
+            exibirMensagem(LivroErros.LIVRO_NAO_ENCONTRADO, "Livro")
+            return []
+        }
+        return resultado
     }
 
-    buscaPorAutor (autor: string | undefined): Livro[] {
+    static buscaPorAutor (autor: string | undefined): Livro[] {
         const normalizado = normalizaParaString(autor)
 
         if (!normalizado){
-            console.log("Nome não pode ser um campo vazio.")
+            exibirMensagem(LivroErros.CAMPO_DE_BUSCA_VAZIO, "Livro")
             return []
         }
 
-        return Livro.listaLivros.filter((el) => el._autor === normalizado) || []
+        const resultado = Livro.listaLivros.filter((el) => el._autor.includes(normalizado))
+        if (resultado.length===0){
+            exibirMensagem(LivroErros.LIVRO_NAO_ENCONTRADO, "Livro")
+            return []
+        }
+        return resultado
     }
 
-    buscaPorGenero (genero: string | undefined): Livro[] {
+    static buscaPorGenero (genero: string | undefined): Livro[] {
         const normalizado=normalizaParaString(genero)
         if (!normalizado){
-            console.log("Nome de gênero não pode ser um campo vazio.")
+            exibirMensagem(LivroErros.CAMPO_DE_BUSCA_VAZIO, "Livro")
             return []
         }
 
-        const testeLivroGenero = Livro.listaLivros.filter((el) => el._generos.some((generoObjeto) => generoObjeto.nome === normalizado))
+        const resultado = Livro.listaLivros.filter((el) => el._generos.some((generoObjeto) => generoObjeto.nome.includes(normalizado)))
 
-        if (testeLivroGenero.length > 0){
-            return testeLivroGenero
-        } else {
-            console.log("Nenhum livro deste gênero foi encontrado.")
+        if (resultado.length===0){
+            exibirMensagem(LivroErros.LIVRO_NAO_ENCONTRADO, "Livro")
             return []
         }
+            return resultado
     }
 
-    buscaPorEditora (editora: string | undefined): Livro[]{
+    static buscaPorEditora (editora: string | undefined): Livro[]{
         const normalizado = normalizaParaString(editora)
         if (!normalizado){
-            console.log("Nome não pode ser um campo vazio.")
+            exibirMensagem(LivroErros.CAMPO_DE_BUSCA_VAZIO, "Livro")
             return []
         }
 
-        return Livro.listaLivros.filter((el) => el._editora === normalizado) || []
+        const resultado = Livro.listaLivros.filter((el) => el._editora.includes(normalizado))
+
+        if (resultado.length===0){
+            exibirMensagem(LivroErros.LIVRO_NAO_ENCONTRADO, "Livro")
+            return []
+        }
+        return resultado
     }
 
-    buscaPorEdicao (edicao: string | undefined): Livro[] {
+    static buscaPorEdicao (edicao: string | undefined): Livro[] {
         const normalizado = normalizaParaString(edicao)
         if (!normalizado){
-            console.log("Nome não pode ser um campo vazio.")
+            exibirMensagem(LivroErros.CAMPO_DE_BUSCA_VAZIO, "Livro")
             return []
         }
 
-        return Livro.listaLivros.filter((el)=> el._edicao === normalizado)
+        const resultado = Livro.listaLivros.filter((el)=> el._edicao.includes(normalizado))
+
+        if (resultado.length===0){
+            exibirMensagem(LivroErros.LIVRO_NAO_ENCONTRADO, "Livro")
+            return []
+        }
+        return resultado
     }
 
-    buscaPorDisponivel(disponivel: boolean): Livro [] { //tratar entrada undefined
-        const testeDisponivel = Livro.listaLivros.filter((el)=> el._disponivel=disponivel)
-        if (testeDisponivel.length>0){
-            return testeDisponivel
-        } else {
-            console.log(`Nenhum livro com status ${disponivel? "disponível" : "indisponível"} foi encontrado.`)
+    static buscaPorDisponivel(disponivel: boolean | undefined): Livro [] { 
+        if (disponivel === undefined){
+            exibirMensagem(LivroErros.CAMPO_DE_BUSCA_VAZIO, "Livro")
             return []
+        } else {
+            const testeDisponivel = Livro.listaLivros.filter((el)=> el._disponivel===disponivel)
+            if (testeDisponivel.length===0){
+                exibirMensagem(LivroErros.LIVRO_NAO_ENCONTRADO, "Livro")
+                return []
+            } else {
+                return testeDisponivel
+            } 
         }
     }
 

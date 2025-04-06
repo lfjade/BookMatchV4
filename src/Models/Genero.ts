@@ -38,8 +38,13 @@ export class Genero {
             exibirMensagem(GeneroErros.CAMPO_DE_BUSCA_VAZIO, "Genero")
             return []
         }
-            // busca não pode ser vazia   
-        return Genero.listaGeneros.filter((el) => normalizaParaString(el._nome).includes(normalizado)) || []
+        const resultado = Genero.listaGeneros.filter((el) => normalizaParaString(el._nome).includes(normalizado))
+
+        if(resultado.length===0){
+            exibirMensagem(GeneroErros.GENERO_NAO_ENCONTRADO, "Genero")
+            return []
+        }
+        return resultado
     }
 
     static buscaPorID(id:number | undefined): Genero[]{
@@ -48,7 +53,13 @@ export class Genero {
             exibirMensagem(GeneroErros.CAMPO_DE_BUSCA_VAZIO, "Genero")
             return []
         }
-        return Genero.listaGeneros.filter((el) => String(el._id).includes(String(normalizado)))
+        const resultado = Genero.listaGeneros.filter((el) => String(el._id).includes(String(normalizado)))
+        if (resultado.length===0){
+            exibirMensagem(GeneroErros.GENERO_NAO_ENCONTRADO, "Genero")
+            return []
+        }
+
+        return resultado
     }
 
     // ----------------- getters ---------------

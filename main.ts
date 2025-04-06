@@ -15,5 +15,6 @@
 //!!!!!!!!!!!!!! IMPLEMENTANDO LIVRO
 //  PADRONIZAR ERROS DE LIVRO > busca não pode ser um campo vazio 
 // !!!! necessidade de implementar erros de busca com campo vazio em Usuário e Gênero também
+// !!!!!!!!!!!!!!!!!!11 ADICIONAR METODOS 'LISTAR TODOS'
 // fase 2: login
 // fase 3: menus

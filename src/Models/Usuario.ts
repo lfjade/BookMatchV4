@@ -46,7 +46,7 @@ export class Usuario{
         } else {
             return false
         }
-    } // aqui a verificação acontece na procura pelo índice e não envia nenhuma mensagem de confirmação
+    } 
 
     // ----------------------- MÉTODOS DE BUSCA -------------------------
 
@@ -59,7 +59,14 @@ export class Usuario{
             return []
         } // aqui tratou entrada nula;
         
-        return Usuario.listaUsuarios.filter((el) => el._userName.includes(normalizado)) || []
+        const resultado = Usuario.listaUsuarios.filter((el) => el._userName.includes(normalizado))
+
+        if (resultado.length===0){
+            exibirMensagem(UsuarioErros.USUARIO_NAO_ENCONTRADO, "Usuario")
+            return []
+        }
+
+        return resultado
 
     }
 
@@ -71,7 +78,14 @@ export class Usuario{
             return []
         }
 
-        return Usuario.listaUsuarios.filter((el) => el._cpf.includes(normalizado)) || []
+        const resultado = Usuario.listaUsuarios.filter((el) => el._cpf.includes(normalizado))
+
+        if (resultado.length===0){
+            exibirMensagem(UsuarioErros.USUARIO_NAO_ENCONTRADO, "Usuario")
+            return []
+        }
+
+        return resultado
 
     }
 
@@ -83,7 +97,14 @@ export class Usuario{
             return []
         }
 
-        return Usuario.listaUsuarios.filter((el) => String(el._id).includes(String(normalizado))) || []
+        const resultado = Usuario.listaUsuarios.filter((el) => String(el._id).includes(String(normalizado)))
+
+        if (resultado.length===0){
+            exibirMensagem(UsuarioErros.USUARIO_NAO_ENCONTRADO, "Usuario")
+            return []
+        }
+
+        return resultado
     }
     
     static buscaPorNome (nome: string | undefined): Usuario[]{
@@ -94,11 +115,30 @@ export class Usuario{
             return []
         }
 
-        return Usuario.listaUsuarios.filter((el) => normalizaParaString(el._nome).includes(normalizado)) || []
+        const resultado = Usuario.listaUsuarios.filter((el) => normalizaParaString(el._nome).includes(normalizado))
+
+        if (resultado.length===0){
+            exibirMensagem(UsuarioErros.USUARIO_NAO_ENCONTRADO, "Usuario")
+            return []
+        }
+
+        return resultado
     }
     
-    static buscaPorTipoDeConta (conta: boolean): Usuario[]{
-        return Usuario.listaUsuarios.filter((el)=> el._verificaAdmin===conta) || []
+    static buscaPorTipoDeConta (conta: boolean | undefined): Usuario[]{
+        if (conta===undefined){
+            exibirMensagem(UsuarioErros.CAMPO_DE_BUSCA_VAZIO, "Usuario")
+            return []
+        } else {
+            const resultado = Usuario.listaUsuarios.filter((el)=> el._verificaAdmin===conta)
+
+            if (resultado.length===0){
+                exibirMensagem(UsuarioErros.USUARIO_NAO_ENCONTRADO, "Usuario")
+                return []
+            }
+    
+            return resultado
+        }
     }
 
 // --------------- getters --------------
