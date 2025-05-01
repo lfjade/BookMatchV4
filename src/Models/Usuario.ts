@@ -109,6 +109,10 @@ export class Usuario{
         return this._cpf
     }
 
+    get senha (): string{
+        return this._senha
+    }
+
     get verificaAdmin (): boolean{
         return this._verificaAdmin
     }
@@ -128,6 +132,10 @@ export class Usuario{
 
     set cpf (cpf:string){
         this._cpf=cpf
+    }
+
+    set senha (senha: string){
+        this.senha=senha
     }
 
     set verificaAdmin(verificaAdmin:boolean){

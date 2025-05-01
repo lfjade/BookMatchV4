@@ -11,6 +11,11 @@ function exibirLivros (livros: Livro[], mensagemNaoEcontrado:string){
     }
 }
 
+export function exibirTodos(){
+    Livro.listaLivros.forEach(exibirLivro)
+
+}
+
 export function exibirPorID(id:number){
     exibirLivros(Livro.buscaPorId(id), LivroErros.LIVRO_NAO_ENCONTRADO)
 }
