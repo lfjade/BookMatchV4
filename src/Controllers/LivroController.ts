@@ -41,6 +41,3 @@ export function exibirPorGenero (genero: string){
 export function exibirPorDisponivel(disponivel:boolean){
     exibirLivros(Livro.buscaPorDisponivel(disponivel), LivroErros.LIVRO_NAO_ENCONTRADO)
 }
-
-
-// BA eu esqueci total que a mensagem de nao encontrado tava aquiiiiiiiiiiiiiiiiiiiii

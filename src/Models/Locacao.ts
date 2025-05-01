@@ -1,6 +1,6 @@
 import { Livro } from "./Livro";
 import { Usuario } from "./Usuario";
-import {normalizaParaNumero} from "../utils/"
+import {normalizaParaNumero, normalizaParaString} from "../utils/"
 
 export class Locacao {
     protected _id: number
@@ -42,35 +42,43 @@ export class Locacao {
 
     // ---------- Métodos de busca ----------- //
 
-    buscaLocacaoPorID(id: number | undefined): Locacao[] {
+
+    static buscaPorID(id: number | undefined): Locacao[] {
         const normalizado = normalizaParaNumero(id);
-        const locacao = Locacao.listaLocacoes.find((el) => el._id === normalizado);
+        if(!normalizado) return []
+        return Locacao.listaLocacoes.filter((el) => String(el._id).includes(String(normalizado)));
         
-        return locacao ? [locacao] : [];
     }
 
-    buscaLocacaoPorUsuario(usuario: Usuario | undefined): Locacao[]{
-        return Locacao.listaLocacoes.filter((el) => el._usuario === usuario) || []
+    static buscaPorUsuario (usuario: string | undefined): Locacao[] {
+        const normalizado=normalizaParaString(usuario)
+        if (!normalizado) return []
+
+        return Locacao.listaLocacoes.filter((el) => normalizaParaString(el._usuario.nome).includes(normalizado))
+
     }
 
-    buscaLocacaoPorLivro(livro: Livro | undefined): Locacao[]  {
-        return Locacao.listaLocacoes.filter((el) => el._livro === livro) || []
+    static buscaLocacaoPorLivro(livro: string | undefined): Locacao[]  {
+        const normalizado = normalizaParaString(livro)
+        if (!normalizado) return []
+
+        return Locacao.listaLocacoes.filter((el) => normalizaParaString(el._livro.nome).includes(normalizado))
     }
 
-    buscaLocacaoAtiva(): Locacao[]{
-        return Locacao.listaLocacoes.filter((el) => el._livro.disponivel===false) || []
+    static buscaLocacaoAtiva(): Locacao[]{
+        return Locacao.listaLocacoes.filter((el) => el._livro.disponivel===false)
     }
 
-    buscaLocacoesAtrasadas(): Locacao[] {
+    static buscaLocacoesAtrasadas(): Locacao[] {
         const hoje = new Date();
         return Locacao.listaLocacoes.filter(locacao => 
             locacao._dataDevolvido === null && locacao._previsaoDevolucao < hoje
         );
     }
 
-    buscaLocacoesConcluidas(): Locacao[] {
+    static buscaLocacoesConcluidas(): Locacao[] {
         return Locacao.listaLocacoes.filter(locacao => locacao._dataDevolvido !== null);
-    }
+    } 
     
     //--------- getters --------------
     get id(): number{
@@ -120,3 +128,5 @@ export class Locacao {
         this._dataDevolvido=dataDevolvido
     }
 }
+
+// obs: impedir locações duplicadas, impedir locação de livros já locados, cobrir erros com exceções como testes negativos e entrada invalida de dados

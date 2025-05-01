@@ -1,4 +1,4 @@
-import { UsuarioErros, GeneroErros, LivroErros } from "./erros"
+import { UsuarioErros, GeneroErros, LivroErros, LocacaoErros } from "./erros"
 export const mensagensPadronizadas = {
     Usuario: {
     [UsuarioErros.USUARIO_NAO_ENCONTRADO]: "Nenhum usuário foi encontrado.",
@@ -16,5 +16,9 @@ export const mensagensPadronizadas = {
         [LivroErros.LIVRO_NAO_ENCONTRADO]: "Nenhum livro foi encontrado.",
         [LivroErros.LIVRO_DUPLICADO]: "Livro já cadastrado no sistema.",
         [LivroErros.CAMPO_DE_BUSCA_VAZIO]: "O campo de busca não pode ser vazio."
+    },
+    Locacao:{
+        [LocacaoErros.LOCACAO_NAO_ENCONTRADA]: "Nenhuma locação com estes parâmetros foi encontrada.",
+        [LocacaoErros.CAMPO_DE_BUSCA_VAZIO]: "O campo de busca não pode ser vazio."
     }
 }

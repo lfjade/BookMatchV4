@@ -18,7 +18,10 @@ export function normalizaParaNumero(valor: any): number | null {
     return isNaN(convertido) ? null : convertido;
 }
 
-export function formataData (data: Date): string{
+export function formataData (data: Date | null): string{
+    if (!data){
+        return ``
+    }
     const dia = String(data.getDate()).padStart(2, '0')
     const mes = String(data.getMonth()).padStart(2, '0')
     const ano = data.getFullYear()
