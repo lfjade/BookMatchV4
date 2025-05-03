@@ -142,3 +142,4 @@ export class Usuario{
         this._verificaAdmin=verificaAdmin
     }
 }
+

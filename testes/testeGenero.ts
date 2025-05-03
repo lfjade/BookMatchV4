@@ -1,4 +1,4 @@
-import { Genero } from "../src/models/Genero";
+import { Genero } from "../src/Models/Genero";
 import { exibirMensagem } from "../src/Views/MensagemView";
 import { GeneroErros } from "../src/utils";
 

@@ -1,5 +1,6 @@
 import * as LivroController from "../Controllers/LivroController"
-
+import PromptSync from "prompt-sync"
+const prompt = PromptSync()
 export function acervo(){
     console.log("Seja bem vindo ao acervo!")
     let controle=true
