@@ -19,6 +19,7 @@ export function exibirTodos(){
 export function exibirPorID(id:number){
     exibirLivros(Livro.buscaPorId(id), LivroErros.LIVRO_NAO_ENCONTRADO)
 }
+
 export function exibirPorNome (nome:string){
     exibirLivros(Livro.buscaPorNome(nome), LivroErros.LIVRO_NAO_ENCONTRADO)
 }
@@ -45,4 +46,8 @@ export function exibirPorGenero (genero: string){
 
 export function exibirPorDisponivel(disponivel:boolean){
     exibirLivros(Livro.buscaPorDisponivel(disponivel), LivroErros.LIVRO_NAO_ENCONTRADO)
+}
+
+export function menuLocalizarLivros(){
+    
 }

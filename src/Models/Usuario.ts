@@ -33,6 +33,7 @@ export class Usuario{
         }
 
         Usuario.listaUsuarios.push(usuario)
+        console.log(`Usuário registrado com sucesso: ${usuario._nome}`)
         return {sucesso:true}
     }
 
@@ -45,7 +46,12 @@ export class Usuario{
             return false
         }
     } 
-
+    
+    static autenticar (userName: string | undefined, senha: string | undefined): Usuario | null {
+        const uName = normalizaParaString(userName)
+        const s = senha ? String(senha).trim() : ""
+        return Usuario.listaUsuarios.find(el => normalizaParaString(el._userName) === uName && String(el._senha).trim() === s) ?? null
+    }
     // ----------------------- MÉTODOS DE BUSCA -------------------------
 
     static buscaPorUserName(userName: string | undefined): Usuario[] { 
@@ -92,6 +98,7 @@ export class Usuario{
         return Usuario.listaUsuarios.filter((el)=> el._verificaAdmin===conta)
     }
 
+
 // --------------- getters --------------
     get id (): number{
         return this._id
@@ -135,7 +142,7 @@ export class Usuario{
     }
 
     set senha (senha: string){
-        this.senha=senha
+        this._senha=senha
     }
 
     set verificaAdmin(verificaAdmin:boolean){

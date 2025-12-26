@@ -26,7 +26,9 @@ export class Locacao {
     registrarLocacao(locacao: Locacao){
         if (locacao._livro.disponivel){
             Locacao.listaLocacoes.push(locacao)
-            console.log("Locação registrada com sucesso.")
+            console.log(`Locação registrada com sucesso:`)
+            console.log(`Livro: ${locacao._livro.nome} `)
+            console.log(`Usuário: ${locacao._usuario.nome} `)
             locacao._livro.disponivel=false
         } else {
             console.log("Livro não disponível para locação.")

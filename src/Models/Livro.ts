@@ -33,6 +33,7 @@ export class Livro{
             return {sucesso:false, erro: LivroErros.LIVRO_DUPLICADO}
         }
         Livro.listaLivros.push(livro)
+        console.log(`Livro registrado com sucesso: ${livro._nome}`)
         return {sucesso:true}
     }
 

@@ -2,6 +2,7 @@
 // !!!!!!!!!! ideia: padronizar isbn
 // fase 3: menus
 
+import "./mockDb";
 import { Usuario } from "./src/Models/Usuario";
 import * as UsuarioController from "./src/Controllers/UsuarioController"
 import PromptSync from "prompt-sync";
@@ -10,10 +11,10 @@ import { acervo } from "./src/Menus/acervo";
 import { menuUsuario } from "./src/Menus/menuUsuario"
 import { menuAdmin } from "./src/Menus/menuAdmin"
 
-function fazerLogin(username: string, senha:string): Usuario | null{
-    const usuario = Usuario.listaUsuarios.find((el) => el.userName===username && el.senha===senha)
-    return usuario ?? null
-}
+// function fazerLogin(username: string, senha:string): Usuario | null{
+//     const usuario = Usuario.listaUsuarios.find((el) => el.userName===username && el.senha===senha)
+//     return usuario ?? null
+// }
 
 let controle = true
 while (controle){
@@ -28,15 +29,29 @@ while (controle){
         case 1: // login
             let usernameentrada = String (prompt("Username: "))
             let senhaentrada = String(prompt("Senha: "))
-            const logado = fazerLogin(usernameentrada, senhaentrada)
+
+            const usuario = Usuario.listaUsuarios.find(
+                (el) => el.userName === usernameentrada
+            )
+
+            if (!usuario) {
+                console.log("Usuário não encontrado.")
+                break
+            }
+
+            if (usuario.senha !== senhaentrada) {
+                console.log("Senha incorreta.")
+                break
+            }
+
+
+            const logado = Usuario.autenticar(usernameentrada, senhaentrada)
             if (logado){
                 if (logado.verificaAdmin===true){
                     menuAdmin(logado)
                 } else {
                     menuUsuario(logado)
                 }
-            } else {
-                console.log("Usuário ou senha incorretos.")
             }
             
 

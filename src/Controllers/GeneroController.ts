@@ -3,7 +3,7 @@ import { exibirGenero } from "../Views/GeneroView";
 import { exibirMensagem } from "../Views/MensagemView";
 import { GeneroErros, } from "../utils";
 
-function exibirGeneros(generos: Genero[], mensagemNaoEcontrado: string){
+export function exibirGeneros(generos: Genero[], mensagemNaoEcontrado: string){
     if (generos.length===0){
         exibirMensagem(mensagemNaoEcontrado)
     } else {

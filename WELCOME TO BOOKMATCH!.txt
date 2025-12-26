@@ -1,12 +1,19 @@
 WELCOME TO BOOKMATCH!
 
-The BookMatch is a library catalog with MVC architecture, developed purely in TypeScript.
+The BookMatch is a MVP library catalog with MVC architecture, developed purely in TypeScript.
+It holds my first steps into understandic SOC, DRY and clean code.
+
 It was born from an idea of connecting people through lending books.
 
 This Project is very dear to my heart, because when it first came to my mind, I was very new to coding and envisioned something that I didn't knew how to develop. I had just been introduced to TypeScript, soon after being introduced to JavaScript.
 
 It's first version was full of bugs, and me and my team couldn't even present it properly because most of the methods broke at presentation time. That led me to the deep wish of actually making it right.
 As it grew, I got to learn why there are good practices and bad practices in coding.
-This is not just my personal Project, as it is track of my swet and blood in the path of becoming a dev.
+This is not just my personal project, as it is track of my swet and blood in the path of becoming a dev.
 Trying to make it work the way that I first envisioned it gave me a nice bunch of opportunities on overcoming the knowledge I had and how much I believed myself.
-Maybe it's not the best Project you have ever seen, but surely is best then i tought I could do back then. And still I'm very proud at the result.
+Maybe it's not the best project you have ever seen, but surely is best then I tought I could do back then. And still I'm very proud at the result.
+
+It was not entirely finished until recently, when i set up the last menu and solved a few bugs.
+
+HOW TO USE IT
+

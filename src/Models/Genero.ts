@@ -12,12 +12,14 @@ export class Genero {
         this._nome=nome
     }
 
+
     static registrarGenero(genero: Genero): {sucesso: boolean, erro?: GeneroErros}{
         const testeGenero=Genero.buscaPorNome(genero._nome)
         if (testeGenero.length>0){
             return {sucesso: false, erro: GeneroErros.GENERO_DUPLICADO}
         } else {
             Genero.listaGeneros.push(genero)
+            console.log(`Gênero registrado com sucesso: ${genero._nome}`)
             return {sucesso: true}
         }
     }

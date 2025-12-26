@@ -9,13 +9,13 @@ export function normalizaCpf(cpf: any): string{
     return cpfNormalizado
 }
 
-export function normalizaParaNumero(valor: any): number | null {
+export function normalizaParaNumero(valor: any): number | undefined {
     if (typeof valor === "number" && !isNaN(valor)) {
         return valor;
     }
 
     const convertido = Number(valor);
-    return isNaN(convertido) ? null : convertido;
+    return isNaN(convertido) ? undefined : convertido;
 }
 
 export function formataData (data: Date | null): string{
