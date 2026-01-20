@@ -1,4 +1,5 @@
 <div align="center">
+> Esta sessão está em inglês! Para ler em português, acesse (./README.pt-BR.md)
 
 # 🦋 BookMatch 🦋
 
