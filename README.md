@@ -47,7 +47,7 @@ Or, if installed as a CLI:
 bookmatch
 ```
 
-## Tech
+## 🧰 Tech
 - TypeScript
 - Node.js
 - MVC Architecture
