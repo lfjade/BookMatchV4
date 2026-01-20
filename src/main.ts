@@ -1,15 +1,19 @@
+#!/usr/bin/env node
+
 // NOTA: talvez seja necessario revisitar o funcionamento pra impedir que alterações nos atributos como username, id e CPF não dupliquem
 // !!!!!!!!!! ideia: padronizar isbn
 // fase 3: menus
 
+
+
 import "./mockDb";
-import { Usuario } from "./src/Models/Usuario";
-import * as UsuarioController from "./src/Controllers/UsuarioController"
+import { Usuario } from "./Models/Usuario";
+import * as UsuarioController from "./Controllers/UsuarioController"
 import PromptSync from "prompt-sync";
 const prompt = PromptSync()
-import { acervo } from "./src/Menus/acervo";
-import { menuUsuario } from "./src/Menus/menuUsuario"
-import { menuAdmin } from "./src/Menus/menuAdmin"
+import { acervo } from "./Menus/acervo";
+import { menuUsuario } from "./Menus/menuUsuario"
+import { menuAdmin } from "./Menus/menuAdmin"
 
 // function fazerLogin(username: string, senha:string): Usuario | null{
 //     const usuario = Usuario.listaUsuarios.find((el) => el.userName===username && el.senha===senha)

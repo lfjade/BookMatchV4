@@ -1,8 +1,8 @@
 // mockDB.ts
-import { Usuario } from "./src/Models/Usuario"
-import { Genero } from "./src/Models/Genero"
-import { Livro } from "./src/Models/Livro"
-import { Locacao } from "./src/Models/Locacao"
+import { Usuario } from "./Models/Usuario"
+import { Genero } from "./Models/Genero"
+import { Livro } from "./Models/Livro"
+import { Locacao } from "./Models/Locacao"
 
 console.log("Mock DB iniciado!")
 
