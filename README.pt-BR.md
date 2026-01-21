@@ -67,4 +67,11 @@ Conforme ele cresceu, eu pude entender por que existem boas e más práticas na 
 Pra mim ele não é apenas um projeto pessoal, e sim um rastro do meu sangue e suor pra me tornar uma programadora melhor. 
 Tentar fazer ele funcionar da maneira que eu enxerguei ele no começo me deu a oportunidade de superar o conhecimento que eu tinha e desafiar a minha própria opinião sobre mim mesma.
 Talvez não seja o melhor projeto que você já viu, mas certamente é muito melhor do que eu me julguei capaz de fazer na época.  E ainda hoje tenho muito orgulho do resultado.
+
+## 🪦 Versões Anteriores
+
+Você pode conferir as versões anteriores (e provavelmente quebradas) nos links abaixo.
+- [BookMatch v1](https://github.com/lfjade/BookMatch-V1)
+- [BookMatch v2](https://github.com/lfjade/BookMatchV2)
+- [BookMatch v3](https://github.com/lfjade/BookMatchV3)
 </div>
