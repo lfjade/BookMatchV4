@@ -68,3 +68,10 @@ This is not just my personal project, as it is track of my swet and blood in the
 Trying to make it work the way that I first envisioned it gave me a nice bunch of opportunities on overcoming the knowledge I had and how much I believed myself.
 Maybe it's not the best project you have ever seen, but surely is best then I tought I could do back then. And still I'm very proud at the result.
 </div>
+
+## 🪦 Previous versions
+
+You can check the previous (and probably broken) versions in the links below.
+- [BookMatch v1](https://github.com/lfjade/BookMatch-V1)
+- [BookMatch v2](https://github.com/lfjade/BookMatchV2)
+- [BookMatch v3](https://github.com/lfjade/BookMatchV3)
